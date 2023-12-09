@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "mirf.h": "c",
+        "stm8s.h": "c",
+        "stdint.h": "c",
+        "stdio.h": "c",
+        "uart.h": "c",
+        "delay.h": "c",
+        "stm8s_it.h": "c"
+    }
+}
