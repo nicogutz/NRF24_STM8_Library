@@ -96,11 +96,33 @@
 void secondary()
 {
   printf("Start");
-  NRF24_t dev;
+  // CE Pin
+  // pin_t ce_pin={
+  //   .letter=GPIOD,
+  //   .number=GPIO_PIN_3
+  // };
+
+  // //CSN_PIN
+  // pin_t csn_pin={
+  //   .letter=GPIOD,
+  //   .number=GPIO_PIN_4
+  // };
+
+  NRF24_t dev = {
+	.cePin = {
+    .letter=GPIOD,
+    .number=GPIO_PIN_3
+  },
+	.csnPin = {
+    .letter=GPIOD,
+    .number=GPIO_PIN_4
+  },
+	.channel = 32,
+	.payload = 114
+  };
+
   Nrf24_init(&dev);
-  uint8_t payload = 32;
-  uint8_t channel = 110;
-  Nrf24_config(&dev, channel, payload);
+  Nrf24_config(&dev);
 
   // Set own address using 5 characters
   int ret = Nrf24_setRADDR(&dev, (uint8_t *)"ABCDE");

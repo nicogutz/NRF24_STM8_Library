@@ -181,7 +181,7 @@ bool spi_read_byte(uint8_t *Datain, uint8_t *Dataout, uint8_t DataLength);
 uint8_t spi_transfer(uint8_t address);
 void spi_csnLow(NRF24_t *dev);
 void spi_csnHi(NRF24_t *dev);
-void Nrf24_config(NRF24_t *dev, uint8_t channel, uint8_t payload);
+void Nrf24_config(NRF24_t *dev);
 void Nrf24_send(NRF24_t *dev, uint8_t *value);
 ErrorStatus Nrf24_setRADDR(NRF24_t *dev, uint8_t *adr);
 ErrorStatus Nrf24_setTADDR(NRF24_t *dev, uint8_t *adr);

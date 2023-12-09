@@ -54,7 +54,7 @@ void Nrf24_init(NRF24_t *dev)
 	GPIO_Init(
 		dev->cePin.letter,
 		dev->cePin.number,
-		GPIO_MODE_OUT_PP_HIGH_FAST);
+		GPIO_MODE_OUT_PP_HIGH_SLOW);
 
 	gpio_set_level(&dev->cePin, 0);
 
@@ -62,7 +62,7 @@ void Nrf24_init(NRF24_t *dev)
 	GPIO_Init(
 		dev->csnPin.letter,
 		dev->csnPin.number,
-		GPIO_MODE_OUT_PP_HIGH_FAST);
+		GPIO_MODE_OUT_PP_HIGH_SLOW);
 
 	gpio_set_level(&dev->csnPin, 1);
 	// SPI
@@ -141,10 +141,8 @@ void spi_csnLow(NRF24_t *dev)
 // Sets the important registers in the MiRF module and powers the module
 // in receiving mode
 // NB: channel and payload must be set now.
-void Nrf24_config(NRF24_t *dev, uint8_t channel, uint8_t payload)
+void Nrf24_config(NRF24_t *dev)
 {
-	dev->channel = channel;
-	dev->payload = payload;
 	Nrf24_configRegister(dev, RF_CH, dev->channel);	   // Set RF channel
 	Nrf24_configRegister(dev, RX_PW_P0, dev->payload); // Set length of incoming payload
 	Nrf24_configRegister(dev, RX_PW_P1, dev->payload);
