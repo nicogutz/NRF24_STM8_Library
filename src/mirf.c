@@ -89,6 +89,7 @@ bool spi_write_byte(uint8_t *Dataout, uint8_t DataLength)
 
 		SPI_SendData(Dataout[i]);
 
+		// TODO CHECK IF IT WORKS!
 		// while (SPI_GetFlagStatus(SPI_FLAG_BSY) == SET); Maybe not necesary
 
 		while (SPI_GetFlagStatus(SPI_FLAG_RXNE) == RESET)
@@ -108,7 +109,8 @@ bool spi_read_byte(uint8_t *Datain, uint8_t *Dataout, uint8_t DataLength)
 		{
 		};
 		SPI_SendData(Dataout[i]);
-		// while (SPI_GetFlagStatus(SPI_FLAG_BSY) == SET) Maybe not necesary
+		// TODO CHECK IF IT WORKS!
+		// while (SPI_GetFlagStatus(SPI_FLAG_BSY) == SET) Maybe not necesary 
 
 		while (SPI_GetFlagStatus(SPI_FLAG_RXNE) == RESET)
 		{
@@ -249,6 +251,9 @@ bool Nrf24_rxFifoEmpty(NRF24_t *dev)
 // Reads payload bytes into data array
 void Nrf24_getData(NRF24_t *dev, uint8_t *data)
 {
+	// TODO CHECK IF IT WORKS!
+	while (SPI_GetFlagStatus(SPI_FLAG_BSY) == SET); //Maybe not necesary
+
 	spi_csnLow(dev);						 // Pull down chip select
 	spi_transfer(R_RX_PAYLOAD);				 // Send cmd to read rx payload
 	spi_read_byte(data, data, dev->payload); // Read payload
@@ -267,6 +272,9 @@ void Nrf24_getData(NRF24_t *dev, uint8_t *data)
 // Clocks only one byte into the given MiRF register
 void Nrf24_configRegister(NRF24_t *dev, uint8_t reg, uint8_t value)
 {
+	// TODO CHECK IF IT WORKS!
+	while (SPI_GetFlagStatus(SPI_FLAG_BSY) == SET); //Maybe not necesary
+
 	spi_csnLow(dev);
 	spi_transfer(W_REGISTER | (REGISTER_MASK & reg));
 	spi_transfer(value);
@@ -276,6 +284,9 @@ void Nrf24_configRegister(NRF24_t *dev, uint8_t reg, uint8_t value)
 // Reads an array of bytes from the given start position in the MiRF registers
 void Nrf24_readRegister(NRF24_t *dev, uint8_t reg, uint8_t *value, uint8_t len)
 {
+	// TODO CHECK IF IT WORKS!
+	while (SPI_GetFlagStatus(SPI_FLAG_BSY) == SET); //Maybe not necesary
+
 	spi_csnLow(dev);
 	spi_transfer(R_REGISTER | (REGISTER_MASK & reg));
 	spi_read_byte(value, value, len);
@@ -285,6 +296,9 @@ void Nrf24_readRegister(NRF24_t *dev, uint8_t reg, uint8_t *value, uint8_t len)
 // Writes an array of bytes into inte the MiRF registers
 void Nrf24_writeRegister(NRF24_t *dev, uint8_t reg, uint8_t *value, uint8_t len)
 {
+	// TODO CHECK IF IT WORKS!
+	while (SPI_GetFlagStatus(SPI_FLAG_BSY) == SET); //Maybe not necesary
+
 	spi_csnLow(dev);
 	spi_transfer(W_REGISTER | (REGISTER_MASK & reg));
 	spi_write_byte(value, len);
@@ -366,7 +380,8 @@ bool Nrf24_isSend(NRF24_t *dev, int timeout)
 			}
 
 			i++;
-			// I believe either TX_DS or MAX_RT will always be notified.
+			// TODO CHECK IF IT WORKS!
+			// I believe either TX_DS or MAX_RT will always be notified. 
 			// Therefore, it is unusual for neither to be notified for a period of time.
 			// I don't know exactly how to respond.
 			if (i < ((F_CPU / 18 / 1000UL) * timeout))

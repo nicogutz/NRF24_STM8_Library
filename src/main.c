@@ -110,15 +110,15 @@ void secondary()
 
   NRF24_t dev = {
 	.cePin = {
-    .letter=GPIOD,
+    .letter=GPIOC,
     .number=GPIO_PIN_3
   },
 	.csnPin = {
-    .letter=GPIOD,
+    .letter=GPIOC,
     .number=GPIO_PIN_4
   },
-	.channel = 32,
-	.payload = 114
+	.channel = 114,
+	.payload = 32
   };
 
   Nrf24_init(&dev);
