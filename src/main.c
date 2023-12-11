@@ -108,26 +108,30 @@ void secondary()
   //   .number=GPIO_PIN_4
   // };
 
-  NRF24_t dev = {
-	.cePin = {
-    .letter=GPIOC,
-    .number=GPIO_PIN_3
-  },
-	.csnPin = {
-    .letter=GPIOC,
-    .number=GPIO_PIN_4
-  },
-	.channel = 114,
-	.payload = 32
-  };
+  NRF24_t dev = {.PTX = 0};
+  GPIO_Init(
+      GPIOB,
+      GPIO_PIN_1,
+      GPIO_MODE_OUT_OD_LOW_FAST);
+  GPIO_Init(
+      GPIOB,
+      GPIO_PIN_2,
+      GPIO_MODE_OUT_OD_LOW_FAST);
+
+  GPIO_WriteHigh(GPIOB, GPIO_PIN_1);
+  GPIO_WriteHigh(GPIOB, GPIO_PIN_2);
 
   Nrf24_init(&dev);
+
   Nrf24_config(&dev);
 
   // Set own address using 5 characters
   int ret = Nrf24_setRADDR(&dev, (uint8_t *)"ABCDE");
+
   if (ret != SUCCESS)
   {
+    
+    
     printf("NRF24l01 not installed");
     while (1)
     {
@@ -147,7 +151,7 @@ void secondary()
   }
 
   Nrf24_SetSpeedDataRates(&dev, RF24_1MBPS);
-  Nrf24_setRetransmitDelay(&dev, 1);
+  Nrf24_setRetransmitDelay(&dev, 0);
 
   // Print settings
   // Nrf24_printDetails(&dev);
@@ -165,20 +169,27 @@ void secondary()
     Nrf24_getData(&dev, buf);
   }
 
-  while(1) {
-  	//When the program is received, the received data is output from the serial port
-  	if (Nrf24_dataReady(&dev)) {
-  		Nrf24_getData(&dev, buf);
-  		printf( "Got data:%s", buf);
-  		Nrf24_send(&dev, buf);
-  		printf( "Wait for sending.....");
-  		if (Nrf24_isSend(&dev, 1000)) {
-  			printf("Send success:%s", buf);
-  		} else {
-  			printf("Send fail:");
-  		}
-  	}
-  	delay_ms(1);
+  while (1)
+  {
+    // When the program is received, the received data is output from the serial port
+    if (Nrf24_dataReady(&dev))
+    {
+			GPIO_WriteLow(GPIOB, GPIO_PIN_2);
+
+      Nrf24_getData(&dev, buf);
+      printf("Got data:%s", buf);
+      Nrf24_send(&dev, buf);
+      printf("Wait for sending.....");
+      if (Nrf24_isSend(&dev, 1000))
+      {
+        printf("Send success:%s", buf);
+      }
+      else
+      {
+        printf("Send fail:");
+      }
+    }
+    delay_ms(1);
   }
 }
 /* Private functions ---------------------------------------------------------*/

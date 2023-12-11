@@ -2,19 +2,10 @@
 #define MAIN_MIRF_H_
 #include "stm8s.h"
 
-typedef struct
-{
-    GPIO_TypeDef *letter;
-    GPIO_Pin_TypeDef number;
-} pin_t;
 
 typedef struct
 {
     uint8_t PTX;         // In sending mode.
-    uint8_t channel;     // Channel 0 - 127 or 0 - 84 in the US
-    uint8_t payload;     // Payload width in bytes default 16 max 32.
-    pin_t cePin;         // CE Pin controls RX / TX, default 8.
-    pin_t csnPin;        // CSN Pin Chip Select Not, default 7.
 } NRF24_t;
 
 /* Memory Map */
