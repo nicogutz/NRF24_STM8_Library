@@ -59,7 +59,7 @@ static const uint32_t SPI_Frequency = 4000000; // Stable even with a long jumper
 // {
 // 	(level) ? GPIO_WriteHigh(pin_letter, pin_number) : GPIO_WriteLow(pin_letter, pin_number);
 // }
-void Nrf24_init(NRF24_t *dev)
+void Nrf24_init()
 {
 	// Set up CE pin
 	GPIO_Init(
@@ -101,7 +101,8 @@ bool spi_write_byte(uint8_t *Dataout, uint8_t DataLength)
 		SPI_SendData(Dataout[i]);
 
 		// TODO CHECK IF IT WORKS!
-		while (SPI_GetFlagStatus(SPI_FLAG_BSY) == SET); 
+		while (SPI_GetFlagStatus(SPI_FLAG_BSY) == SET)
+			;
 
 		while (SPI_GetFlagStatus(SPI_FLAG_RXNE) == RESET)
 		{
@@ -114,18 +115,21 @@ bool spi_write_byte(uint8_t *Dataout, uint8_t DataLength)
 
 bool spi_read_byte(uint8_t *Datain, uint8_t *Dataout, uint8_t DataLength)
 {
-	
+
 	for (uint8_t i = 0; i < DataLength; i++)
 	{
 
 		// Get data
-		while (SPI_GetFlagStatus(SPI_FLAG_TXE) == RESET){}
-			;
+		while (SPI_GetFlagStatus(SPI_FLAG_TXE) == RESET)
+		{
+		};
 		SPI_SendData(0x00);
-		while (SPI_GetFlagStatus(SPI_FLAG_BSY) == SET){}
-			;
-		while (SPI_GetFlagStatus(SPI_FLAG_RXNE) == RESET){}
-			;
+		while (SPI_GetFlagStatus(SPI_FLAG_BSY) == SET)
+		{
+		};
+		while (SPI_GetFlagStatus(SPI_FLAG_RXNE) == RESET)
+		{
+		};
 		Datain[i] = SPI_ReceiveData();
 	}
 
@@ -145,12 +149,12 @@ uint8_t spi_transfer(uint8_t address)
 	return SPI_ReceiveData();
 }
 
-void spi_csnHi(NRF24_t *dev)
+void spi_csnHi()
 {
 	GPIO_WriteHigh(CSN_PIN_LETTER, CSN_PIN_NUMBER);
 }
 
-void spi_csnLow(NRF24_t *dev)
+void spi_csnLow()
 {
 	GPIO_WriteLow(CSN_PIN_LETTER, CSN_PIN_NUMBER);
 }
@@ -158,129 +162,126 @@ void spi_csnLow(NRF24_t *dev)
 // Sets the important registers in the MiRF module and powers the module
 // in receiving mode
 // NB: channel and payload must be set now.
-void Nrf24_config(NRF24_t *dev)
+void Nrf24_config(bool *PTX)
 {
 
-	Nrf24_configRegister(dev, RF_CH, NRF_CHANNEL_NR); // Set RF channel
-
-	Nrf24_configRegister(dev, RX_PW_P0, NRF_PAYLOAD_SIZE); // Set length of incoming payload
-	Nrf24_configRegister(dev, RX_PW_P1, NRF_PAYLOAD_SIZE);
-	Nrf24_powerUpRx(dev); // Start receiver
-	Nrf24_flushRx(dev);
+	Nrf24_configRegister(RF_CH, NRF_CHANNEL_NR);	  // Set RF channel
+	Nrf24_configRegister(RX_PW_P0, NRF_PAYLOAD_SIZE); // Set length of incoming payload
+	Nrf24_configRegister(RX_PW_P1, NRF_PAYLOAD_SIZE);
+	Nrf24_powerUpRx(PTX); // Start receiver
+	Nrf24_flushRx();
 }
 
-// Sets the receiving device address
-// void Nrf24_setRADDR(NRF24_t * dev, uint8_t * adr)
-ErrorStatus Nrf24_setRADDR(NRF24_t *dev, uint8_t *adr)
+// Sets the receiving ice address
+// void Nrf24_setRADDR( , uint8_t * adr)
+ErrorStatus Nrf24_setRADDR(uint8_t *adr)
 {
 	int ret = SUCCESS;
-	Nrf24_writeRegister(dev, RX_ADDR_P1, adr, mirf_ADDR_LEN);
+	Nrf24_writeRegister(RX_ADDR_P1, adr, mirf_ADDR_LEN);
 	uint8_t buffer[5];
-	Nrf24_readRegister(dev, RX_ADDR_P1, buffer, sizeof(buffer));
+	Nrf24_readRegister(RX_ADDR_P1, buffer, sizeof(buffer));
 
 	for (int i = 0; i < 5; i++)
 	{
 		if (adr[i] != buffer[i])
 		{
 
-
 			ret = ERROR;
 		}
 	}
-			// GPIO_WriteLow(GPIOB, GPIO_PIN_2);
+	// GPIO_WriteLow(GPIOB, GPIO_PIN_2);
 
 	return ret;
 }
 
-// Sets the transmitting device  address
-// void Nrf24_setTADDR(NRF24_t * dev, uint8_t * adr)
-ErrorStatus Nrf24_setTADDR(NRF24_t *dev, uint8_t *adr)
+// Sets the transmitting ice  address
+// void Nrf24_setTADDR( , uint8_t * adr)
+ErrorStatus Nrf24_setTADDR(uint8_t *adr)
 {
 	int ret = SUCCESS;
-	Nrf24_writeRegister(dev, RX_ADDR_P0, adr, mirf_ADDR_LEN); // RX_ADDR_P0 must be set to the sending addr for auto ack to work.
-	Nrf24_writeRegister(dev, TX_ADDR, adr, mirf_ADDR_LEN);
+	Nrf24_writeRegister(RX_ADDR_P0, adr, mirf_ADDR_LEN); // RX_ADDR_P0 must be set to the sending addr for auto ack to work.
+	Nrf24_writeRegister(TX_ADDR, adr, mirf_ADDR_LEN);
 	uint8_t buffer[5];
-	Nrf24_readRegister(dev, RX_ADDR_P0, buffer, sizeof(buffer));
+	Nrf24_readRegister(RX_ADDR_P0, buffer, sizeof(buffer));
 	for (int i = 0; i < 5; i++)
 	{
 		if (adr[i] != buffer[i])
 			ret = ERROR;
-
 	}
 	return ret;
 }
 
-// Add the receiving device address
-void Nrf24_addRADDR(NRF24_t *dev, uint8_t pipe, uint8_t adr)
+// Add the receiving ice address
+void Nrf24_addRADDR(uint8_t pipe, uint8_t adr)
 {
 	uint8_t value;
-	Nrf24_readRegister(dev, EN_RXADDR, &value, 1);
+	Nrf24_readRegister(EN_RXADDR, &value, 1);
 
 	if (pipe == 2)
 	{
-		Nrf24_configRegister(dev, RX_PW_P2, NRF_PAYLOAD_SIZE);
-		Nrf24_configRegister(dev, RX_ADDR_P2, adr);
+		Nrf24_configRegister(RX_PW_P2, NRF_PAYLOAD_SIZE);
+		Nrf24_configRegister(RX_ADDR_P2, adr);
 		value = value | 0x04;
-		Nrf24_configRegister(dev, EN_RXADDR, value);
+		Nrf24_configRegister(EN_RXADDR, value);
 	}
 	else if (pipe == 3)
 	{
-		Nrf24_configRegister(dev, RX_PW_P3, NRF_PAYLOAD_SIZE);
-		Nrf24_configRegister(dev, RX_ADDR_P3, adr);
+		Nrf24_configRegister(RX_PW_P3, NRF_PAYLOAD_SIZE);
+		Nrf24_configRegister(RX_ADDR_P3, adr);
 		value = value | 0x08;
-		Nrf24_configRegister(dev, EN_RXADDR, value);
+		Nrf24_configRegister(EN_RXADDR, value);
 	}
 	else if (pipe == 4)
 	{
-		Nrf24_configRegister(dev, RX_PW_P4, NRF_PAYLOAD_SIZE);
-		Nrf24_configRegister(dev, RX_ADDR_P4, adr);
+		Nrf24_configRegister(RX_PW_P4, NRF_PAYLOAD_SIZE);
+		Nrf24_configRegister(RX_ADDR_P4, adr);
 		value = value | 0x10;
-		Nrf24_configRegister(dev, EN_RXADDR, value);
+		Nrf24_configRegister(EN_RXADDR, value);
 	}
 	else if (pipe == 5)
 	{
-		Nrf24_configRegister(dev, RX_PW_P5, NRF_PAYLOAD_SIZE);
-		Nrf24_configRegister(dev, RX_ADDR_P5, adr);
+		Nrf24_configRegister(RX_PW_P5, NRF_PAYLOAD_SIZE);
+		Nrf24_configRegister(RX_ADDR_P5, adr);
 		value = value | 0x20;
-		Nrf24_configRegister(dev, EN_RXADDR, value);
+		Nrf24_configRegister(EN_RXADDR, value);
 	}
 }
 
 // Checks if data is available for reading
-bool Nrf24_dataReady(NRF24_t *dev)
+bool Nrf24_dataReady()
 {
 	// See note in getData() function - just checking RX_DR isn't good enough
-	uint8_t status = Nrf24_getStatus(dev);
+	uint8_t status = Nrf24_getStatus();
 	if (status & (1 << RX_DR))
 		return 1;
 	// We can short circuit on RX_DR, but if it's not set, we still need
 	// to check the FIFO for any pending packets
-	// return !Nrf24_rxFifoEmpty(dev);
+	// return !Nrf24_rxFifoEmpty();
 	return 0;
 }
 
 // Get pipe number for reading
-uint8_t Nrf24_getDataPipe(NRF24_t *dev)
+uint8_t Nrf24_getDataPipe()
 {
-	uint8_t status = Nrf24_getStatus(dev);
+	uint8_t status = Nrf24_getStatus();
 	return ((status & 0x0E) >> 1);
 }
 
-bool Nrf24_rxFifoEmpty(NRF24_t *dev)
+bool Nrf24_rxFifoEmpty()
 {
 	uint8_t fifoStatus;
-	Nrf24_readRegister(dev, FIFO_STATUS, &fifoStatus, sizeof(fifoStatus));
+	Nrf24_readRegister(FIFO_STATUS, &fifoStatus, sizeof(fifoStatus));
 	return (fifoStatus & (1 << RX_EMPTY));
 }
 
 // Reads payload bytes into data array
-void Nrf24_getData(NRF24_t *dev, uint8_t *data)
+void Nrf24_getData(uint8_t *data)
 {
 
-	spi_csnLow(dev);							 // Pull down chip select
+	spi_csnLow();								 // Pull down chip select
 	spi_transfer(R_RX_PAYLOAD);					 // Send cmd to read rx payload
 	spi_read_byte(data, data, NRF_PAYLOAD_SIZE); // Read payload
-	spi_csnHi(dev);								 // Pull up chip select
+	spi_csnHi();								 // Pull up chip select
 	// NVI: per product spec, p 67, note c:
 	// "The RX_DR IRQ is asserted by a new packet arrival event. The procedure
 	// for handling this interrupt should be: 1) read payload through SPI,
@@ -289,77 +290,79 @@ void Nrf24_getData(NRF24_t *dev, uint8_t *data)
 	// repeat from step 1)."
 	// So if we're going to clear RX_DR here, we need to check the RX FIFO
 	// in the dataReady() function
-	Nrf24_configRegister(dev, STATUS, (1 << RX_DR)); // Reset status register
+	Nrf24_configRegister(STATUS, (1 << RX_DR)); // Reset status register
 }
 
 // Clocks only one byte into the given MiRF register
-void Nrf24_configRegister(NRF24_t *dev, uint8_t reg, uint8_t value)
+void Nrf24_configRegister(uint8_t reg, uint8_t value)
 {
 
-	spi_csnLow(dev);
+	spi_csnLow();
 	spi_transfer(W_REGISTER | (REGISTER_MASK & reg));
 	spi_transfer(value);
-	spi_csnHi(dev);
+	spi_csnHi();
 }
 
 // Reads an array of bytes from the given start position in the MiRF registers
-void Nrf24_readRegister(NRF24_t *dev, uint8_t reg, uint8_t *value, uint8_t len)
+void Nrf24_readRegister(uint8_t reg, uint8_t *value, uint8_t len)
 {
-	spi_csnLow(dev);
+	spi_csnLow();
 	spi_transfer(R_REGISTER | (REGISTER_MASK & reg));
 
 	spi_read_byte(value, value, len);
 
-	spi_csnHi(dev);
+	spi_csnHi();
 }
 
 // Writes an array of bytes into inte the MiRF registers
-void Nrf24_writeRegister(NRF24_t *dev, uint8_t reg, uint8_t *value, uint8_t len)
+void Nrf24_writeRegister(uint8_t reg, uint8_t *value, uint8_t len)
 {
-	spi_csnLow(dev);
+	spi_csnLow();
 	spi_transfer(W_REGISTER | (REGISTER_MASK & reg));
 	spi_write_byte(value, len);
-	spi_csnHi(dev);
+	spi_csnHi();
 }
 
 // Sends a data package to the default address. Be sure to send the correct
 // amount of bytes as configured as payload on the receiver.
-void Nrf24_send(NRF24_t *dev, uint8_t *value)
+void Nrf24_send(uint8_t *value, bool *PTX)
 {
 	uint8_t status;
-	status = Nrf24_getStatus(dev);
-	while (dev->PTX) // Wait until last paket is send
+	status = Nrf24_getStatus();
+	
+	while (*PTX) // Wait until last paket is send
 	{
-		status = Nrf24_getStatus(dev);
+		status = Nrf24_getStatus();
 		if ((status & ((1 << TX_DS) | (1 << MAX_RT))))
 		{
-			dev->PTX = 0;
+			(*PTX) = 0;
 			break;
 		}
 	}
-	Nrf24_ceLow(dev);
-	Nrf24_powerUpTx(dev);					 // Set to transmitter mode , Power up
-	spi_csnLow(dev);						 // Pull down chip select
+
+	Nrf24_ceLow();
+	Nrf24_powerUpTx(PTX);						 // Set to transmitter mode , Power up
+	spi_csnLow();							 // Pull down chip select
 	spi_transfer(FLUSH_TX);					 // Write cmd to flush tx fifo
-	spi_csnHi(dev);							 // Pull up chip select
-	spi_csnLow(dev);						 // Pull down chip select
+	spi_csnHi();							 // Pull up chip select
+	spi_csnLow();							 // Pull down chip select
 	spi_transfer(W_TX_PAYLOAD);				 // Write cmd to write payload
 	spi_write_byte(value, NRF_PAYLOAD_SIZE); // Write payload
-	spi_csnHi(dev);							 // Pull up chip select
-	Nrf24_ceHi(dev);						 // Start transmission
+	spi_csnHi();							 // Pull up chip select
+	Nrf24_ceHi();							 // Start transmission
 }
 
 // Test if chip is still sending.
 // When sending has finished return chip to listening.
-bool Nrf24_isSending(NRF24_t *dev)
+bool Nrf24_isSending(bool *PTX)
 {
 	uint8_t status;
-	if (dev->PTX)
+	if (*PTX)
 	{
-		status = Nrf24_getStatus(dev);
+		status = Nrf24_getStatus();
 		if ((status & ((1 << TX_DS) | (1 << MAX_RT))))
 		{ // if sending successful (TX_DS) or max retries exceded (MAX_RT).
-			Nrf24_powerUpRx(dev);
+			Nrf24_powerUpRx(PTX);
 			return FALSE;
 		}
 		return TRUE;
@@ -370,29 +373,29 @@ bool Nrf24_isSending(NRF24_t *dev)
 // Test if Sending has finished or retry is over.
 // When sending has finished return trur.
 // When reach maximum number of TX retries return false.
-bool Nrf24_isSend(NRF24_t *dev, int timeout)
+bool Nrf24_isSend(int timeout, bool *PTX)
 {
 	uint8_t status;
 	uint32_t i = 0;
 
-	if (dev->PTX)
+	if (*PTX)
 	{
 		while (1)
 		{
-			status = Nrf24_getStatus(dev);
+			status = Nrf24_getStatus();
 			/*
 				if sending successful (TX_DS) or max retries exceded (MAX_RT).
 			*/
 
 			if (status & (1 << TX_DS))
 			{ // Data Sent TX FIFO interrup
-				Nrf24_powerUpRx(dev);
+				Nrf24_powerUpRx(PTX);
 				return TRUE;
 			}
 
 			if (status & (1 << MAX_RT))
 			{ // Maximum number of TX retries interrupt
-				Nrf24_powerUpRx(dev);
+				Nrf24_powerUpRx(PTX);
 				return FALSE;
 			}
 
@@ -411,98 +414,98 @@ bool Nrf24_isSend(NRF24_t *dev, int timeout)
 	return FALSE;
 }
 
-uint8_t Nrf24_getStatus(NRF24_t *dev)
+uint8_t Nrf24_getStatus()
 {
 	uint8_t rv;
-	Nrf24_readRegister(dev, STATUS, &rv, 1);
+	Nrf24_readRegister(STATUS, &rv, 1);
 	return rv;
 }
 
-void Nrf24_powerUpRx(NRF24_t *dev)
+void Nrf24_powerUpRx(bool *PTX)
 {
-	dev->PTX = 0;
-	Nrf24_ceLow(dev);
-	Nrf24_configRegister(dev, CONFIG, mirf_CONFIG | ((1 << PWR_UP) | (1 << PRIM_RX))); // set device as RX mode
-	Nrf24_ceHi(dev);
-	Nrf24_configRegister(dev, STATUS, (1 << TX_DS) | (1 << MAX_RT)); // Clear seeded interrupt and max tx number interrupt
+	*PTX = 0;
+	Nrf24_ceLow();
+	Nrf24_configRegister(CONFIG, mirf_CONFIG | ((1 << PWR_UP) | (1 << PRIM_RX))); // set ice as RX mode
+	Nrf24_ceHi();
+	Nrf24_configRegister(STATUS, (1 << TX_DS) | (1 << MAX_RT)); // Clear seeded interrupt and max tx number interrupt
 }
 
-void Nrf24_flushRx(NRF24_t *dev)
+void Nrf24_flushRx()
 {
-	spi_csnLow(dev);
+	spi_csnLow();
 	spi_transfer(FLUSH_RX);
-	spi_csnHi(dev);
+	spi_csnHi();
 }
 
-void Nrf24_powerUpTx(NRF24_t *dev)
+void Nrf24_powerUpTx(bool *PTX)
 {
-	dev->PTX = 1;
-	Nrf24_configRegister(dev, CONFIG, mirf_CONFIG | ((1 << PWR_UP) | (0 << PRIM_RX))); // set device as TX mode
-	Nrf24_configRegister(dev, STATUS, (1 << TX_DS) | (1 << MAX_RT));				   // Clear seeded interrupt and max tx number interrupt
+	*PTX = 1;
+	Nrf24_configRegister(CONFIG, mirf_CONFIG | ((1 << PWR_UP) | (0 << PRIM_RX))); // set ice as TX mode
+	Nrf24_configRegister(STATUS, (1 << TX_DS) | (1 << MAX_RT));					  // Clear seeded interrupt and max tx number interrupt
 }
 
-void Nrf24_ceHi(NRF24_t *dev)
+void Nrf24_ceHi()
 {
 	GPIO_WriteHigh(CE_PIN_LETTER, CE_PIN_NUMBER);
 }
 
-void Nrf24_ceLow(NRF24_t *dev)
+void Nrf24_ceLow()
 {
 	GPIO_WriteLow(CE_PIN_LETTER, CE_PIN_NUMBER);
 }
 
-void Nrf24_powerDown(NRF24_t *dev)
+void Nrf24_powerDown()
 {
-	Nrf24_ceLow(dev);
-	Nrf24_configRegister(dev, CONFIG, mirf_CONFIG);
+	Nrf24_ceLow();
+	Nrf24_configRegister(CONFIG, mirf_CONFIG);
 }
 
 // Set tx power : 0=-18dBm,1=-12dBm,2=-6dBm,3=0dBm
-void Nrf24_SetOutputRF_PWR(NRF24_t *dev, uint8_t val)
+void Nrf24_SetOutputRF_PWR(uint8_t val)
 {
 	if (val > 3)
 		return;
 
 	uint8_t value;
-	Nrf24_readRegister(dev, RF_SETUP, &value, 1);
+	Nrf24_readRegister(RF_SETUP, &value, 1);
 	value = value & 0xF9;
 	value = value | (val << RF_PWR);
-	// Nrf24_configRegister(dev, RF_SETUP,	(val<< RF_PWR) );
-	Nrf24_configRegister(dev, RF_SETUP, value);
+	// Nrf24_configRegister(RF_SETUP,	(val<< RF_PWR) );
+	Nrf24_configRegister(RF_SETUP, value);
 }
 
 // Select between the high speed data rates:0=1Mbps, 1=2Mbps, 2=250Kbps
-void Nrf24_SetSpeedDataRates(NRF24_t *dev, uint8_t val)
+void Nrf24_SetSpeedDataRates(uint8_t val)
 {
 	if (val > 2)
 		return;
 
 	uint8_t value;
-	Nrf24_readRegister(dev, RF_SETUP, &value, 1);
+	Nrf24_readRegister(RF_SETUP, &value, 1);
 	if (val == 2)
 	{
 		value = value | 0x20;
 		value = value & 0xF7;
-		// Nrf24_configRegister(dev, RF_SETUP,	(1 << RF_DR_LOW) );
-		Nrf24_configRegister(dev, RF_SETUP, value);
+		// Nrf24_configRegister(RF_SETUP,	(1 << RF_DR_LOW) );
+		Nrf24_configRegister(RF_SETUP, value);
 	}
 	else
 	{
 		value = value & 0xD7;
 		value = value | (val << RF_DR_HIGH);
-		// Nrf24_configRegister(dev, RF_SETUP,	(val << RF_DR_HIGH) );
-		Nrf24_configRegister(dev, RF_SETUP, value);
+		// Nrf24_configRegister(RF_SETUP,	(val << RF_DR_HIGH) );
+		Nrf24_configRegister(RF_SETUP, value);
 	}
 }
 
 // Set Auto Retransmit Delay 0=250us, 1=500us, ... 15=4000us
-void Nrf24_setRetransmitDelay(NRF24_t *dev, uint8_t val)
+void Nrf24_setRetransmitDelay(uint8_t val)
 {
 	uint8_t value;
-	Nrf24_readRegister(dev, SETUP_RETR, &value, 1);
+	Nrf24_readRegister(SETUP_RETR, &value, 1);
 	value = value & 0x0F;
 	value = value | (val << ARD);
-	Nrf24_configRegister(dev, SETUP_RETR, value);
+	Nrf24_configRegister(SETUP_RETR, value);
 }
 #define _BV(x) (1 << (x))
 
@@ -511,35 +514,35 @@ void Nrf24_setRetransmitDelay(NRF24_t *dev, uint8_t val)
 // const char rf24_crclength[][10] = {"Disabled", "8 bits", "16 bits"};
 // const char rf24_pa_dbm[][8] = {"PA_MIN", "PA_LOW", "PA_HIGH", "PA_MAX"};
 
-// void Nrf24_printDetails(NRF24_t *dev)
+// void Nrf24_printDetails()
 // {
 
 // 	printf("================ SPI Configuration ================\n");
-// 	// printf("CSN Pin  \t = GPIO%d\n", dev->csn_pin_number);
-// 	// printf("CE Pin	\t = GPIO%d\n", dev->ce_pin_number);
+// 	// printf("CSN Pin  \t = GPIO%d\n", ->csn_pin_number);
+// 	// printf("CE Pin	\t = GPIO%d\n", ->ce_pin_number);
 // 	printf("Clock Speed\t = %d\n", SPI_Frequency);
 // 	printf("================ NRF Configuration ================\n");
 
-// 	Nrf24_print_status(Nrf24_getStatus(dev));
+// 	Nrf24_print_status(Nrf24_getStatus());
 
-// 	Nrf24_print_address_register(dev, "RX_ADDR_P0-1", RX_ADDR_P0, 2);
-// 	Nrf24_print_byte_register(dev, "RX_ADDR_P2-5", RX_ADDR_P2, 4);
-// 	Nrf24_print_address_register(dev, "TX_ADDR\t", TX_ADDR, 1);
+// 	Nrf24_print_address_register("RX_ADDR_P0-1", RX_ADDR_P0, 2);
+// 	Nrf24_print_byte_register("RX_ADDR_P2-5", RX_ADDR_P2, 4);
+// 	Nrf24_print_address_register("TX_ADDR\t", TX_ADDR, 1);
 
-// 	Nrf24_print_byte_register(dev, "RX_PW_P0-6", RX_PW_P0, 6);
-// 	Nrf24_print_byte_register(dev, "EN_AA\t", EN_AA, 1);
-// 	Nrf24_print_byte_register(dev, "EN_RXADDR", EN_RXADDR, 1);
-// 	Nrf24_print_byte_register(dev, "RF_CH\t", RF_CH, 1);
-// 	Nrf24_print_byte_register(dev, "RF_SETUP", RF_SETUP, 1);
-// 	Nrf24_print_byte_register(dev, "CONFIG\t", CONFIG, 1);
-// 	Nrf24_print_byte_register(dev, "DYNPD/FEATURE", DYNPD, 2);
-// 	// printf("getDataRate()=%d\n",Nrf24_getDataRate(dev));
-// 	printf("Data Rate\t = %s\n", rf24_datarates[Nrf24_getDataRate(dev)]);
-// 	// printf("getCRCLength()=%d\n",Nrf24_getCRCLength(dev));
-// 	printf("CRC Length\t = %s\n", rf24_crclength[Nrf24_getCRCLength(dev)]);
-// 	// printf("getPALevel()=%d\n",Nrf24_getPALevel(dev));
-// 	printf("PA Power\t = %s\n", rf24_pa_dbm[Nrf24_getPALevel(dev)]);
-// 	uint8_t retransmit = Nrf24_getRetransmitDelay(dev);
+// 	Nrf24_print_byte_register("RX_PW_P0-6", RX_PW_P0, 6);
+// 	Nrf24_print_byte_register("EN_AA\t", EN_AA, 1);
+// 	Nrf24_print_byte_register("EN_RXADDR", EN_RXADDR, 1);
+// 	Nrf24_print_byte_register("RF_CH\t", RF_CH, 1);
+// 	Nrf24_print_byte_register("RF_SETUP", RF_SETUP, 1);
+// 	Nrf24_print_byte_register("CONFIG\t", CONFIG, 1);
+// 	Nrf24_print_byte_register("DYNPD/FEATURE", DYNPD, 2);
+// 	// printf("getDataRate()=%d\n",Nrf24_getDataRate());
+// 	printf("Data Rate\t = %s\n", rf24_datarates[Nrf24_getDataRate()]);
+// 	// printf("getCRCLength()=%d\n",Nrf24_getCRCLength());
+// 	printf("CRC Length\t = %s\n", rf24_crclength[Nrf24_getCRCLength()]);
+// 	// printf("getPALevel()=%d\n",Nrf24_getPALevel());
+// 	printf("PA Power\t = %s\n", rf24_pa_dbm[Nrf24_getPALevel()]);
+// 	uint8_t retransmit = Nrf24_getRetransmitDelay();
 // 	int16_t delay = (retransmit + 1) * 250;
 // 	printf("Retransmit\t = %d us\n", delay);
 // }
@@ -550,14 +553,14 @@ void Nrf24_setRetransmitDelay(NRF24_t *dev, uint8_t val)
 // 		   (status & _BV(TX_DS)) ? 1 : 0, (status & _BV(MAX_RT)) ? 1 : 0, ((status >> RX_P_NO) & 0x07), (status & _BV(TX_FULL)) ? 1 : 0);
 // }
 
-// void Nrf24_print_address_register(NRF24_t *dev, const char *name, uint8_t reg, uint8_t qty)
+// void Nrf24_print_address_register(const char *name, uint8_t reg, uint8_t qty)
 // {
 // 	printf("%s\t =", name);
 // 	while (qty--)
 // 	{
 // 		// uint8_t buffer[addr_width];
 // 		uint8_t buffer[5];
-// 		Nrf24_readRegister(dev, reg++, buffer, sizeof(buffer));
+// 		Nrf24_readRegister(reg++, buffer, sizeof(buffer));
 
 // 		printf(" 0x");
 // 		for (int i = 0; i < 5; i++)
@@ -568,23 +571,23 @@ void Nrf24_setRetransmitDelay(NRF24_t *dev, uint8_t val)
 // 	printf("\r\n");
 // }
 
-// void Nrf24_print_byte_register(NRF24_t *dev, const char *name, uint8_t reg, uint8_t qty)
+// void Nrf24_print_byte_register(const char *name, uint8_t reg, uint8_t qty)
 // {
 // 	printf("%s\t =", name);
 // 	while (qty--)
 // 	{
 // 		uint8_t buffer[1];
-// 		Nrf24_readRegister(dev, reg++, buffer, 1);
+// 		Nrf24_readRegister(reg++, buffer, 1);
 // 		printf(" 0x%02x", buffer[0]);
 // 	}
 // 	printf("\r\n");
 // }
 #endif
-uint8_t Nrf24_getDataRate(NRF24_t *dev)
+uint8_t Nrf24_getDataRate()
 {
 	rf24_datarate_e result;
 	uint8_t dr;
-	Nrf24_readRegister(dev, RF_SETUP, &dr, sizeof(dr));
+	Nrf24_readRegister(RF_SETUP, &dr, sizeof(dr));
 	// printf("RF_SETUP=%x\n",dr);
 	dr = dr & (_BV(RF_DR_LOW) | _BV(RF_DR_HIGH));
 
@@ -608,16 +611,16 @@ uint8_t Nrf24_getDataRate(NRF24_t *dev)
 	return result;
 }
 
-uint8_t Nrf24_getCRCLength(NRF24_t *dev)
+uint8_t Nrf24_getCRCLength()
 {
 	rf24_crclength_e result = RF24_CRC_DISABLED;
 
 	uint8_t config;
-	Nrf24_readRegister(dev, CONFIG, &config, sizeof(config));
+	Nrf24_readRegister(CONFIG, &config, sizeof(config));
 	// printf("CONFIG=%x\n",config);
 	config = config & (_BV(CRCO) | _BV(EN_CRC));
 	uint8_t AA;
-	Nrf24_readRegister(dev, EN_AA, &AA, sizeof(AA));
+	Nrf24_readRegister(EN_AA, &AA, sizeof(AA));
 
 	if (config & _BV(EN_CRC) || AA)
 	{
@@ -634,18 +637,18 @@ uint8_t Nrf24_getCRCLength(NRF24_t *dev)
 	return result;
 }
 
-uint8_t Nrf24_getPALevel(NRF24_t *dev)
+uint8_t Nrf24_getPALevel()
 {
 	uint8_t level;
-	Nrf24_readRegister(dev, RF_SETUP, &level, sizeof(level));
+	Nrf24_readRegister(RF_SETUP, &level, sizeof(level));
 	// printf("RF_SETUP=%x\n",level);
 	level = (level & (_BV(RF_PWR_LOW) | _BV(RF_PWR_HIGH))) >> 1;
 	return (level);
 }
 
-uint8_t Nrf24_getRetransmitDelay(NRF24_t *dev)
+uint8_t Nrf24_getRetransmitDelay()
 {
 	uint8_t value;
-	Nrf24_readRegister(dev, SETUP_RETR, &value, 1);
+	Nrf24_readRegister(SETUP_RETR, &value, 1);
 	return (value >> 4);
 }

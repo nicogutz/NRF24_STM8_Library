@@ -91,6 +91,7 @@
 #endif
 
 /* Private variables ---------------------------------------------------------*/
+unsigned int bIntFlag;
 /* Private function prototypes -----------------------------------------------*/
 
 void secondary()
@@ -108,7 +109,6 @@ void secondary()
   //   .number=GPIO_PIN_4
   // };
 
-  NRF24_t dev = {.PTX = 0};
   GPIO_Init(
       GPIOB,
       GPIO_PIN_1,
@@ -117,21 +117,31 @@ void secondary()
       GPIOB,
       GPIO_PIN_2,
       GPIO_MODE_OUT_OD_LOW_FAST);
+  GPIO_Init(
+      GPIOB,
+      GPIO_PIN_0,
+      GPIO_MODE_IN_PU_IT);
+
+  EXTI_DeInit();
+  EXTI_SetExtIntSensitivity(EXTI_PORT_GPIOB, EXTI_SENSITIVITY_FALL_ONLY);
+  EXTI_SetTLISensitivity(EXTI_TLISENSITIVITY_FALL_ONLY);
+
+  enableInterrupts();
 
   GPIO_WriteHigh(GPIOB, GPIO_PIN_1);
   GPIO_WriteHigh(GPIOB, GPIO_PIN_2);
 
-  Nrf24_init(&dev);
+  Nrf24_init();
+  bool PTX = 0;
 
-  Nrf24_config(&dev);
+  Nrf24_config(&PTX);
 
   // Set own address using 5 characters
-  int ret = Nrf24_setRADDR(&dev, (uint8_t *)"ABCDE");
+  int ret = Nrf24_setRADDR((uint8_t *)"ABCDE");
 
   if (ret != SUCCESS)
   {
-    
-    
+
     printf("NRF24l01 not installed");
     while (1)
     {
@@ -140,7 +150,7 @@ void secondary()
   }
 
   // Set the receiver address using 5 characters
-  ret = Nrf24_setTADDR(&dev, (uint8_t *)"FGHIJ");
+  ret = Nrf24_setTADDR((uint8_t *)"FGHIJ");
   if (ret != SUCCESS)
   {
     printf("NRF24l01 not installed");
@@ -150,11 +160,11 @@ void secondary()
     }
   }
 
-  Nrf24_SetSpeedDataRates(&dev, RF24_1MBPS);
-  Nrf24_setRetransmitDelay(&dev, 0);
+  Nrf24_SetSpeedDataRates(RF24_1MBPS);
+  Nrf24_setRetransmitDelay(0);
 
   // Print settings
-  // Nrf24_printDetails(&dev);
+  // Nrf24_printDetails();
   printf("Listening...");
 
   uint8_t buf[32];
@@ -162,30 +172,38 @@ void secondary()
   // Clear RX FiFo
   while (1)
   {
-    if (Nrf24_dataReady(&dev) == FALSE)
+    if (Nrf24_dataReady() == FALSE)
     {
       break;
     };
-    Nrf24_getData(&dev, buf);
+    Nrf24_getData(buf);
   }
 
   while (1)
   {
     // When the program is received, the received data is output from the serial port
-    if (Nrf24_dataReady(&dev))
+    if (Nrf24_dataReady())
     {
-			GPIO_WriteLow(GPIOB, GPIO_PIN_2);
+      // if (bIntFlag = 1)
+      // {
+      //   bIntFlag = 0;
+      //   GPIO_WriteLow(GPIOB, GPIO_PIN_1);
+      // }
 
-      Nrf24_getData(&dev, buf);
+      Nrf24_getData(buf);
       printf("Got data:%s", buf);
-      Nrf24_send(&dev, buf);
+      delay_ms(50);
+      Nrf24_send(buf, &PTX);
       printf("Wait for sending.....");
-      if (Nrf24_isSend(&dev, 1000))
+
+      if (Nrf24_isSend(1000, &PTX))
       {
+
         printf("Send success:%s", buf);
       }
       else
       {
+
         printf("Send fail:");
       }
     }

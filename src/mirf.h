@@ -2,12 +2,6 @@
 #define MAIN_MIRF_H_
 #include "stm8s.h"
 
-
-typedef struct
-{
-    uint8_t PTX;         // In sending mode.
-} NRF24_t;
-
 /* Memory Map */
 #define CONFIG 0x00
 #define EN_AA 0x01
@@ -108,14 +102,14 @@ typedef struct
 /*
  enable interrupt caused by RX_	spi_transaction_t SPITransaction;
 
-	if (DataLength > 0)
-	{
-		memset(&SPITransaction, 0, sizeof(spi_transaction_t));
-		SPITransaction.length = DataLength * 8;
-		SPITransaction.tx_buffer = Dataout;
-		SPITransaction.rx_buffer = NULL;
-		spi_device_transmit(dev->_SPIHandle, &SPITransaction);
-	}
+    if (DataLength > 0)
+    {
+        memset(&SPITransaction, 0, sizeof(spi_transaction_t));
+        SPITransaction.length = DataLength * 8;
+        SPITransaction.tx_buffer = Dataout;
+        SPITransaction.rx_buffer = NULL;
+        spi_device_transmit(dev->_SPIHandle, &SPITransaction);
+    }
 
 
 // #define mirf_CONFIG ((1<<EN_CRC) | (0<<CRCO) )
@@ -166,44 +160,44 @@ typedef enum
     RF24_CRC_16
 } rf24_crclength_e;
 
-void Nrf24_init(NRF24_t *dev);
+void Nrf24_init();
 bool spi_write_byte(uint8_t *Dataout, uint8_t DataLength);
 bool spi_read_byte(uint8_t *Datain, uint8_t *Dataout, uint8_t DataLength);
 uint8_t spi_transfer(uint8_t address);
-void spi_csnLow(NRF24_t *dev);
-void spi_csnHi(NRF24_t *dev);
-void Nrf24_config(NRF24_t *dev);
-void Nrf24_send(NRF24_t *dev, uint8_t *value);
-ErrorStatus Nrf24_setRADDR(NRF24_t *dev, uint8_t *adr);
-ErrorStatus Nrf24_setTADDR(NRF24_t *dev, uint8_t *adr);
-void Nrf24_addRADDR(NRF24_t *dev, uint8_t pipe, uint8_t adr);
-bool Nrf24_dataReady(NRF24_t *dev);
-uint8_t Nrf24_getDataPipe(NRF24_t *dev);
-bool Nrf24_isSending(NRF24_t *dev);
-bool Nrf24_isSend(NRF24_t *dev, int timeout);
-bool Nrf24_rxFifoEmpty(NRF24_t *dev);
-bool Nrf24_txFifoEmpty(NRF24_t *dev);
-void Nrf24_getData(NRF24_t *dev, uint8_t *data);
-uint8_t Nrf24_getStatus(NRF24_t *dev);
-void Nrf24_configRegister(NRF24_t *dev, uint8_t reg, uint8_t value);
-void Nrf24_readRegister(NRF24_t *dev, uint8_t reg, uint8_t *value, uint8_t len);
-void Nrf24_writeRegister(NRF24_t *dev, uint8_t reg, uint8_t *value, uint8_t len);
-void Nrf24_powerUpRx(NRF24_t *dev);
-void Nrf24_powerUpTx(NRF24_t *dev);
-void Nrf24_powerDown(NRF24_t *dev);
-void Nrf24_SetOutputRF_PWR(NRF24_t *dev, uint8_t val);
-void Nrf24_SetSpeedDataRates(NRF24_t *dev, uint8_t val);
-void Nrf24_setRetransmitDelay(NRF24_t *dev, uint8_t val);
-void Nrf24_ceHi(NRF24_t *dev);
-void Nrf24_ceLow(NRF24_t *dev);
-void Nrf24_flushRx(NRF24_t *dev);
-void Nrf24_printDetails(NRF24_t *dev);
+void spi_csnLow();
+void spi_csnHi();
+void Nrf24_config(bool *PTX);
+ErrorStatus Nrf24_setRADDR(uint8_t *adr);
+ErrorStatus Nrf24_setTADDR(uint8_t *adr);
+void Nrf24_addRADDR(uint8_t pipe, uint8_t adr);
+bool Nrf24_dataReady();
+uint8_t Nrf24_getDataPipe();
+bool Nrf24_isSend(int timeout, bool *PTX);
+bool Nrf24_isSending(bool *PTX);
+void Nrf24_send(uint8_t *value, bool *PTX);
+bool Nrf24_rxFifoEmpty();
+bool Nrf24_txFifoEmpty();
+void Nrf24_getData(uint8_t *data);
+uint8_t Nrf24_getStatus();
+void Nrf24_configRegister(uint8_t reg, uint8_t value);
+void Nrf24_readRegister(uint8_t reg, uint8_t *value, uint8_t len);
+void Nrf24_writeRegister(uint8_t reg, uint8_t *value, uint8_t len);
+void Nrf24_powerUpRx(bool *PTX);
+void Nrf24_powerUpTx(bool *PTX);
+void Nrf24_powerDown();
+void Nrf24_SetOutputRF_PWR(uint8_t val);
+void Nrf24_SetSpeedDataRates(uint8_t val);
+void Nrf24_setRetransmitDelay(uint8_t val);
+void Nrf24_ceHi();
+void Nrf24_ceLow();
+void Nrf24_flushRx();
+void Nrf24_printDetails();
 void Nrf24_print_status(uint8_t status);
-void Nrf24_print_address_register(NRF24_t *dev, const char *name, uint8_t reg, uint8_t qty);
-void Nrf24_print_byte_register(NRF24_t *dev, const char *name, uint8_t reg, uint8_t qty);
-uint8_t Nrf24_getDataRate(NRF24_t *dev);
-uint8_t Nrf24_getCRCLength(NRF24_t *dev);
-uint8_t Nrf24_getPALevel(NRF24_t *dev);
-uint8_t Nrf24_getRetransmitDelay(NRF24_t *dev);
+void Nrf24_print_address_register(const char *name, uint8_t reg, uint8_t qty);
+void Nrf24_print_byte_register(const char *name, uint8_t reg, uint8_t qty);
+uint8_t Nrf24_getDataRate();
+uint8_t Nrf24_getCRCLength();
+uint8_t Nrf24_getPALevel();
+uint8_t Nrf24_getRetransmitDelay();
 
 #endif /* MAIN_MIRF_H_ */
