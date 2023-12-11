@@ -86,6 +86,7 @@ void Nrf24_init()
 		SPI_DATADIRECTION_2LINES_FULLDUPLEX,
 		SPI_NSS_SOFT,
 		(uint8_t)0x07);
+		
 	SPI_Cmd(ENABLE);
 }
 

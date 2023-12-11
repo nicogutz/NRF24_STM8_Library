@@ -184,15 +184,20 @@ void secondary()
     // When the program is received, the received data is output from the serial port
     if (Nrf24_dataReady())
     {
-      // if (bIntFlag = 1)
-      // {
-      //   bIntFlag = 0;
-      //   GPIO_WriteLow(GPIOB, GPIO_PIN_1);
-      // }
+      if (bIntFlag == 1)
+      {
+        bIntFlag = 0;
+        GPIO_WriteLow(GPIOB, GPIO_PIN_1);
+      }
+      else{
+          GPIO_WriteHigh(GPIOB, GPIO_PIN_1);
+      }
 
       Nrf24_getData(buf);
       printf("Got data:%s", buf);
+
       delay_ms(50);
+
       Nrf24_send(buf, &PTX);
       printf("Wait for sending.....");
 
