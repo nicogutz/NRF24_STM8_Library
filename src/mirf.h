@@ -162,7 +162,7 @@ typedef enum
 
 void Nrf24_init();
 bool spi_write_byte(uint8_t *Dataout, uint8_t DataLength);
-bool spi_read_byte(uint8_t *Datain, uint8_t *Dataout, uint8_t DataLength);
+bool spi_read_byte(uint8_t *Datain, uint8_t DataLength);
 uint8_t spi_transfer(uint8_t address);
 void spi_csnLow();
 void spi_csnHi();
@@ -191,13 +191,5 @@ void Nrf24_setRetransmitDelay(uint8_t val);
 void Nrf24_ceHi();
 void Nrf24_ceLow();
 void Nrf24_flushRx();
-void Nrf24_printDetails();
-void Nrf24_print_status(uint8_t status);
-void Nrf24_print_address_register(const char *name, uint8_t reg, uint8_t qty);
-void Nrf24_print_byte_register(const char *name, uint8_t reg, uint8_t qty);
-uint8_t Nrf24_getDataRate();
-uint8_t Nrf24_getCRCLength();
-uint8_t Nrf24_getPALevel();
-uint8_t Nrf24_getRetransmitDelay();
 
 #endif /* MAIN_MIRF_H_ */
