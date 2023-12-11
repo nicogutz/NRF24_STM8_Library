@@ -262,7 +262,7 @@ void Nrf24_addRADDR(uint8_t pipe, uint8_t adr)
 }
 
 /// @brief  Checks if data is available for reading.
-/// @return TRUE if ready 
+/// @return TRUE if ready
 bool Nrf24_dataReady()
 {
 	// See note in getData() function - just checking RX_DR isn't good enough
@@ -276,13 +276,15 @@ bool Nrf24_dataReady()
 }
 
 /// @brief Get pipe number for reading
-/// @return 
+/// @return The pipe number
 uint8_t Nrf24_getDataPipe()
 {
 	uint8_t status = Nrf24_getStatus();
 	return ((status & 0x0E) >> 1);
 }
 
+/// @brief Checks if FIFO is empty
+/// @return True if empty
 bool Nrf24_rxFifoEmpty()
 {
 	uint8_t fifoStatus;
@@ -290,7 +292,8 @@ bool Nrf24_rxFifoEmpty()
 	return (fifoStatus & (1 << RX_EMPTY));
 }
 
-// Reads payload bytes into data array
+/// @brief Reads NRF payload bytes into data array
+/// @param data An array to store the data based on NRF_PAYLOAD_SIZE
 void Nrf24_getData(uint8_t *data)
 {
 
@@ -309,7 +312,9 @@ void Nrf24_getData(uint8_t *data)
 	Nrf24_configRegister(STATUS, (1 << RX_DR)); // Reset status register
 }
 
-// Clocks only one byte into the given MiRF register
+/// @brief Clocks only one byte into the given MiRF register
+/// @param reg Register to change
+/// @param value Value to set
 void Nrf24_configRegister(uint8_t reg, uint8_t value)
 {
 
@@ -319,7 +324,10 @@ void Nrf24_configRegister(uint8_t reg, uint8_t value)
 	spi_csnHi();
 }
 
-// Reads an array of bytes from the given start position in the MiRF registers
+/// @brief Reads an array of bytes from the given start position in the MiRF registers
+/// @param reg The register to read
+/// @param value The array to store the value
+/// @param len The length of the register
 void Nrf24_readRegister(uint8_t reg, uint8_t *value, uint8_t len)
 {
 	spi_csnLow();
@@ -330,7 +338,10 @@ void Nrf24_readRegister(uint8_t reg, uint8_t *value, uint8_t len)
 	spi_csnHi();
 }
 
-// Writes an array of bytes into inte the MiRF registers
+/// @brief Writes an array of bytes into inte the MiRF registers
+/// @param reg Register to write
+/// @param value Array containing the value to store
+/// @param len Length of the register
 void Nrf24_writeRegister(uint8_t reg, uint8_t *value, uint8_t len)
 {
 	spi_csnLow();
@@ -338,9 +349,10 @@ void Nrf24_writeRegister(uint8_t reg, uint8_t *value, uint8_t len)
 	spi_write_byte(value, len);
 	spi_csnHi();
 }
-
-// Sends a data package to the default address. Be sure to send the correct
-// amount of bytes as configured as payload on the receiver.
+/// @brief Sends a data package to the default address. Be sure to send the correct
+/// amount of bytes as configured as payload on the receiver.
+/// @param value The value to send, length based on NRF_PAYLOAD_SIZE
+/// @param PTX A bool containing the RX/TX state of the NRF
 void Nrf24_send(uint8_t *value, bool *PTX)
 {
 	uint8_t status;
@@ -368,8 +380,9 @@ void Nrf24_send(uint8_t *value, bool *PTX)
 	Nrf24_ceHi();							 // Start transmission
 }
 
-// Test if chip is still sending.
-// When sending has finished return chip to listening.
+/// @brief Test if chip is still sending. When sending has finished return chip to listening.
+/// @param PTX The boolean holding the RX/TX state of the NRF
+/// @return TRUE if is sending
 bool Nrf24_isSending(bool *PTX)
 {
 	uint8_t status;
@@ -386,9 +399,11 @@ bool Nrf24_isSending(bool *PTX)
 	return FALSE;
 }
 
-// Test if Sending has finished or retry is over.
-// When sending has finished return trur.
-// When reach maximum number of TX retries return false.
+/// @brief Test if Sending has finished or retry is over.
+/// @param timeout How long to timeout in ms
+/// @param PTX The boolean holding the RX/TX state of the NRF
+/// @return When sending has finished return TRUE
+/// When maximum number of TX retries return FALSE
 bool Nrf24_isSend(int timeout, bool *PTX)
 {
 	uint8_t status;
@@ -430,13 +445,16 @@ bool Nrf24_isSend(int timeout, bool *PTX)
 	return FALSE;
 }
 
+/// @brief Get the status of the NRF
+/// @return STATUS register value
 uint8_t Nrf24_getStatus()
 {
 	uint8_t rv;
 	Nrf24_readRegister(STATUS, &rv, 1);
 	return rv;
 }
-
+/// @brief Starts up the NRF to be RX, the default.
+/// @param PTX The boolean holding the RX/TX state of the NRF
 void Nrf24_powerUpRx(bool *PTX)
 {
 	*PTX = 0;
@@ -446,13 +464,15 @@ void Nrf24_powerUpRx(bool *PTX)
 	Nrf24_configRegister(STATUS, (1 << TX_DS) | (1 << MAX_RT)); // Clear seeded interrupt and max tx number interrupt
 }
 
+/// @brief Flushes RX FIFO
 void Nrf24_flushRx()
 {
 	spi_csnLow();
 	spi_transfer(FLUSH_RX);
 	spi_csnHi();
 }
-
+/// @brief Sets the NRF to TX mode
+/// @param PTX The boolean holding the RX/TX state of the NRF
 void Nrf24_powerUpTx(bool *PTX)
 {
 	*PTX = 1;
@@ -460,23 +480,25 @@ void Nrf24_powerUpTx(bool *PTX)
 	Nrf24_configRegister(STATUS, (1 << TX_DS) | (1 << MAX_RT));					  // Clear seeded interrupt and max tx number interrupt
 }
 
+/// @brief Set CE High
 void Nrf24_ceHi()
 {
 	GPIO_WriteHigh(CE_PIN_LETTER, CE_PIN_NUMBER);
 }
-
+/// @brief Set CE Low
 void Nrf24_ceLow()
 {
 	GPIO_WriteLow(CE_PIN_LETTER, CE_PIN_NUMBER);
 }
-
+/// @brief Power down the NRF
 void Nrf24_powerDown()
 {
 	Nrf24_ceLow();
 	Nrf24_configRegister(CONFIG, mirf_CONFIG);
 }
 
-// Set tx power : 0=-18dBm,1=-12dBm,2=-6dBm,3=0dBm
+/// @brief Set TX Power
+/// @param val 0=-18dBm,1=-12dBm,2=-6dBm,3=0dBm
 void Nrf24_SetOutputRF_PWR(uint8_t val)
 {
 	if (val > 3)
@@ -490,7 +512,8 @@ void Nrf24_SetOutputRF_PWR(uint8_t val)
 	Nrf24_configRegister(RF_SETUP, value);
 }
 
-// Select between the high speed data rates:0=1Mbps, 1=2Mbps, 2=250Kbps
+/// @brief Select between the high speed data rates.
+/// @param val 0=1Mbps (Recommended), 1=2Mbps, 2=250Kbps
 void Nrf24_SetSpeedDataRates(uint8_t val)
 {
 	if (val > 2)
@@ -514,7 +537,8 @@ void Nrf24_SetSpeedDataRates(uint8_t val)
 	}
 }
 
-// Set Auto Retransmit Delay 0=250us, 1=500us, ... 15=4000us
+/// @brief Set Auto Retransmit Delay
+/// @param val 0=250us, 1=500us, ... 15=4000us
 void Nrf24_setRetransmitDelay(uint8_t val)
 {
 	uint8_t value;
