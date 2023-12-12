@@ -50,28 +50,34 @@ unsigned int bIntFlag;
 
 void secondary()
 {
+  // Debuging LEDs
   GPIO_Init(
       GPIOB,
       GPIO_PIN_1,
-      GPIO_MODE_OUT_OD_LOW_FAST);
+      GPIO_MODE_OUT_OD_LOW_FAST); // Open Drain Mode, since it has to sink current
   GPIO_Init(
       GPIOB,
       GPIO_PIN_2,
       GPIO_MODE_OUT_OD_LOW_FAST);
+  
+  //Button
   GPIO_Init(
       GPIOB,
       GPIO_PIN_0,
       GPIO_MODE_IN_PU_IT);
 
+  // Interrupt for button
   EXTI_DeInit();
   EXTI_SetExtIntSensitivity(EXTI_PORT_GPIOB, EXTI_SENSITIVITY_FALL_ONLY);
   EXTI_SetTLISensitivity(EXTI_TLISENSITIVITY_FALL_ONLY);
 
   enableInterrupts();
 
+  // Turn off LEDs
   GPIO_WriteHigh(GPIOB, GPIO_PIN_1);
   GPIO_WriteHigh(GPIOB, GPIO_PIN_2);
 
+  //NRF initialization
   Nrf24_init();
   bool PTX = 0;
 
@@ -79,10 +85,8 @@ void secondary()
 
   // Set own address using 5 characters
   int ret = Nrf24_setRADDR((uint8_t *)"ABCDE");
-
   if (ret != SUCCESS)
   {
-
     while (1)
     {
       delay_ms(1);
@@ -99,12 +103,11 @@ void secondary()
     }
   }
 
+  // This has to be set to 1MBps and 150us delay, if using 250kbps, use at least 1000us delay
   Nrf24_SetSpeedDataRates(RF24_1MBPS);
   Nrf24_setRetransmitDelay(0);
 
-  // Print settings
-  // Nrf24_printDetails();
-
+  // Output/Input Buffer
   uint8_t buf[32];
 
   // Clear RX FiFo
@@ -122,6 +125,7 @@ void secondary()
     // When the program is received, the received data is output from the serial port
     if (Nrf24_dataReady())
     {
+      // Turns the led on when a packet is recived if the button was clicked
       if (bIntFlag == 1)
       {
         bIntFlag = 0;
@@ -133,19 +137,22 @@ void secondary()
       }
 
       Nrf24_getData(buf);
-
+      // The ESP is printing stuff so it takes a while to switch to RX mode.
       delay_ms(10);
-
+      
       Nrf24_send(buf, &PTX);
+      
+      // Same here, delay a bit.
       delay_ms(10);
-
 
       while (!Nrf24_isSend(50, &PTX))
       {
+        //If no ACK after the preconfigured retries, send again.
         Nrf24_send(buf, &PTX);
         delay_ms(10);
       }
     }
+    // Wait a bit to check if the NRF recieved data.
     delay_ms(1);
   }
 }
