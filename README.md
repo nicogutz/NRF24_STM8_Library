@@ -27,6 +27,7 @@ Please see [MIRF](src/MIRF.md) for information.
 Debugging
 ==========
 Debugging is currently only possible using Linux, there is a core issue with SDCC. This might get fixed in the future.
+For debuging to work at version 6.11, follow the instructions at https://github.com/platformio/platform-ststm8/issues/61
 
 Notes regarding SPL Setup
 =========================
