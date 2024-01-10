@@ -1,6 +1,7 @@
 MIT License (MIRF)
 
 Copyright (c) 2020 nopnop2002
+
 Copyright (c) 2023 nicogutz
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
