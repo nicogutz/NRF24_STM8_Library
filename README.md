@@ -9,7 +9,7 @@ Documentation at https://nicogutz.github.io/NRF24_STM8_Library
 How to build STM8 MIRF
 =====================================
 
-1. (Windows) Install STLink [Drivers](https://www.st.com/en/development-tools/stsw-link009.html)
+1. (Windows) Install STLink [Drivers](https://www.st.com/en/development-tools/stsw-link009.html) Make a new account with ST before downloadning, their confirmation Email from this site never reaches for some reason.
 2. [Install PlatformIO](https://docs.platformio.org/en/latest/core/installation/methods/installer-script.html)
 3. Install the platformio extension on VSCode.
 4. Clone this repo and open with VSCode.
