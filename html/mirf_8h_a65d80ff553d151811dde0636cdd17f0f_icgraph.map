@@ -1,0 +1,5 @@
+<map id="Nrf24_dataReady" name="Nrf24_dataReady">
+<area shape="rect" id="node1" title="Checks if data is available for reading." alt="" coords="245,5,380,32"/>
+<area shape="rect" id="node2" href="$main_8c.html#adf492910b4e33f44cbc3b0301308292d" title=" " alt="" coords="108,5,197,32"/>
+<area shape="rect" id="node3" href="$main_8c.html#a6288eba0f8e8ad3ab1544ad731eb7667" title="Main program." alt="" coords="5,5,60,32"/>
+</map>

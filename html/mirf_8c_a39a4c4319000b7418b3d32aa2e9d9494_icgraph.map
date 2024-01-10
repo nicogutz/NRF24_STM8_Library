@@ -1,0 +1,9 @@
+<map id="spi_write_byte" name="spi_write_byte">
+<area shape="rect" id="node1" title="This function writes data to MOSI. It checks if it is being used." alt="" coords="625,31,743,57"/>
+<area shape="rect" id="node2" href="$mirf_8c.html#aa30f7d76954ad77dafd2825c4cd60c3f" title="Sends a data package to the default address. Be sure to send the correct amount of bytes as configure..." alt="" coords="453,5,549,32"/>
+<area shape="rect" id="node5" href="$mirf_8c.html#a93449fb4395f800456a7711f8fe99c68" title="Writes an array of bytes into inte the MiRF registers." alt="" coords="425,56,577,83"/>
+<area shape="rect" id="node3" href="$main_8c.html#adf492910b4e33f44cbc3b0301308292d" title=" " alt="" coords="108,56,197,83"/>
+<area shape="rect" id="node4" href="$main_8c.html#a6288eba0f8e8ad3ab1544ad731eb7667" title="Main program." alt="" coords="5,56,60,83"/>
+<area shape="rect" id="node6" href="$mirf_8c.html#acc49f1dc3c4b4482277b33b120c97b26" title="Sets the recieving address (5) bytes!" alt="" coords="245,56,377,83"/>
+<area shape="rect" id="node7" href="$mirf_8c.html#a8f3e77a2dcf7c8a359b9be8c667acfde" title="Sets the transmitting device address." alt="" coords="246,107,377,133"/>
+</map>

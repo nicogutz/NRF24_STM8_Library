@@ -1,0 +1,9 @@
+<map id="src/main.c" name="src/main.c">
+<area shape="rect" id="node1" title="This file contains the main function for: retarget the C library printf scanf functions to the UART1 ..." alt="" coords="126,5,215,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="31,155,105,181"/>
+<area shape="rect" id="node3" href="$stm8s__it_8h.html" title="This file contains the headers of the interrupt handlers." alt="" coords="23,80,113,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="137,80,204,107"/>
+<area shape="rect" id="node5" href="$delay_8h.html" title="Header for delay." alt="" coords="313,80,381,107"/>
+<area shape="rect" id="node7" href="$mirf_8h.html" title="This file contains the NRF24 library headers." alt="" coords="229,80,289,107"/>
+<area shape="rect" id="node6" title=" " alt="" coords="311,155,382,181"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="delay_ms" name="delay_ms">
+<area shape="rect" id="node1" title="Generates a delay in ms." alt="" coords="401,31,487,57"/>
+<area shape="rect" id="node2" href="$mirf_8c.html#a958dfb81dd996b6d339b0f3441fd8531" title="Test if Sending has finished or retry is over." alt="" coords="245,5,353,32"/>
+<area shape="rect" id="node3" href="$main_8c.html#adf492910b4e33f44cbc3b0301308292d" title=" " alt="" coords="108,31,197,57"/>
+<area shape="rect" id="node4" href="$main_8c.html#a6288eba0f8e8ad3ab1544ad731eb7667" title="Main program." alt="" coords="5,31,60,57"/>
+</map>

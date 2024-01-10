@@ -1,0 +1,8 @@
+<map id="src/mirf.c" name="src/mirf.c">
+<area shape="rect" id="node1" title="This file contains the NRF24 library ported to the STM8 using SDCC." alt="" coords="85,5,168,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,80,72,107"/>
+<area shape="rect" id="node3" href="$mirf_8h.html" title="This file contains the NRF24 library headers." alt="" coords="97,80,157,107"/>
+<area shape="rect" id="node5" href="$delay_8h.html" title="Header for delay." alt="" coords="185,80,253,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="87,155,161,181"/>
+<area shape="rect" id="node6" title=" " alt="" coords="186,155,257,181"/>
+</map>

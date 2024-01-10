@@ -1,0 +1,29 @@
+<map id="main" name="main">
+<area shape="rect" id="node1" title="Main program." alt="" coords="5,360,60,387"/>
+<area shape="rect" id="node2" href="$main_8c.html#adf492910b4e33f44cbc3b0301308292d" title=" " alt="" coords="108,360,197,387"/>
+<area shape="rect" id="node3" href="$delay_8c.html#ab7cce8122024d7ba47bf10f434956de4" title="Generates a delay in ms." alt="" coords="483,259,568,285"/>
+<area shape="rect" id="node4" href="$mirf_8c.html#a4f5466685b94668e838714f0938b52ee" title="This sends the necessary registers to the NRF. Initially on RX mode." alt="" coords="261,132,365,159"/>
+<area shape="rect" id="node13" href="$mirf_8c.html#a65d80ff553d151811dde0636cdd17f0f" title="Checks if data is available for reading." alt="" coords="245,537,380,564"/>
+<area shape="rect" id="node17" href="$mirf_8c.html#a10082b1d20ffb577020449c65e523796" title="Reads NRF payload bytes into data array." alt="" coords="467,5,584,32"/>
+<area shape="rect" id="node18" href="$mirf_8c.html#a9ed171af704468994136122b94aeb3ba" title="This function initializes the CE/CS Pins and SPI." alt="" coords="269,689,356,716"/>
+<area shape="rect" id="node19" href="$mirf_8c.html#a958dfb81dd996b6d339b0f3441fd8531" title="Test if Sending has finished or retry is over." alt="" coords="259,309,367,336"/>
+<area shape="rect" id="node20" href="$mirf_8c.html#aa30f7d76954ad77dafd2825c4cd60c3f" title="Sends a data package to the default address. Be sure to send the correct amount of bytes as configure..." alt="" coords="265,487,361,513"/>
+<area shape="rect" id="node23" href="$mirf_8c.html#acc49f1dc3c4b4482277b33b120c97b26" title="Sets the recieving address (5) bytes!" alt="" coords="459,715,591,741"/>
+<area shape="rect" id="node25" href="$mirf_8c.html#a9e1672761009b07f02ff26ad1214bb37" title="Set Auto Retransmit Delay." alt="" coords="428,309,623,336"/>
+<area shape="rect" id="node26" href="$mirf_8c.html#ad79ccd9a834c841c6e3794e4624a186a" title="Select between the high speed data rates." alt="" coords="428,208,623,235"/>
+<area shape="rect" id="node27" href="$mirf_8c.html#a8f3e77a2dcf7c8a359b9be8c667acfde" title="Sets the transmitting device address." alt="" coords="460,765,591,792"/>
+<area shape="rect" id="node5" href="$mirf_8c.html#a020267ad969887a3ff869329e46edcf2" title="Clocks only one byte into the given MiRF register." alt="" coords="671,360,829,387"/>
+<area shape="rect" id="node9" href="$mirf_8c.html#af44f79110171d0520d01a4bcf2fd0668" title="Flushes RX FIFO." alt="" coords="693,259,807,285"/>
+<area shape="rect" id="node10" href="$mirf_8c.html#a1a86587383aed4ca5f4bf773341a204b" title="Starts up the NRF to be RX, the default." alt="" coords="455,157,595,184"/>
+<area shape="rect" id="node6" href="$mirf_8c.html#a8c41aa390e2044b74993705851507b62" title="Set CSN High." alt="" coords="894,512,978,539"/>
+<area shape="rect" id="node7" href="$mirf_8c.html#a01c4c7130d706212195ba270aa2c44bf" title="Set CSN Low." alt="" coords="888,373,984,400"/>
+<area shape="rect" id="node8" href="$mirf_8c.html#aa5a4421f9dfeae78a3e66cf75985bf14" title="An SPI &quot;transfer&quot;, used in this library to simply send an address or command to the NRF." alt="" coords="887,436,985,463"/>
+<area shape="rect" id="node11" href="$mirf_8c.html#a022e9f774dda10550da5135df0800dea" title="Set CE High." alt="" coords="703,411,797,437"/>
+<area shape="rect" id="node12" href="$mirf_8c.html#acac0907a8579a06c7dfe65fde12ae96c" title="Set CE Low." alt="" coords="697,461,803,488"/>
+<area shape="rect" id="node14" href="$mirf_8c.html#a8baf2610b5e4b1bb7c229fab061a06ce" title="Get the status of the NRF." alt="" coords="462,563,589,589"/>
+<area shape="rect" id="node15" href="$mirf_8c.html#ad945b3a81b124a6a3ef283975821c1b6" title="Reads an array of bytes from the given start position in the MiRF registers." alt="" coords="676,563,824,589"/>
+<area shape="rect" id="node16" href="$mirf_8c.html#a069171ad424cd0a0b91ed0043d36b5e8" title="Reads data from MISO." alt="" coords="879,215,993,241"/>
+<area shape="rect" id="node21" href="$mirf_8c.html#a09bdf1c956be716a9de18b3d28468fa4" title="Sets the NRF to TX mode." alt="" coords="456,360,595,387"/>
+<area shape="rect" id="node22" href="$mirf_8c.html#a39a4c4319000b7418b3d32aa2e9d9494" title="This function writes data to MOSI. It checks if it is being used." alt="" coords="877,765,995,792"/>
+<area shape="rect" id="node24" href="$mirf_8c.html#a93449fb4395f800456a7711f8fe99c68" title="Writes an array of bytes into inte the MiRF registers." alt="" coords="674,715,826,741"/>
+</map>

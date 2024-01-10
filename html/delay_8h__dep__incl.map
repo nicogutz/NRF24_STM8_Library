@@ -1,0 +1,6 @@
+<map id="src/delay.h" name="src/delay.h">
+<area shape="rect" id="node1" title="Header for delay." alt="" coords="120,5,211,32"/>
+<area shape="rect" id="node2" href="$delay_8c.html" title="This file is used to add a delay to the program." alt="" coords="5,80,96,107"/>
+<area shape="rect" id="node3" href="$main_8c.html" title="This file contains the main function for: retarget the C library printf scanf functions to the UART1 ..." alt="" coords="121,80,210,107"/>
+<area shape="rect" id="node4" href="$mirf_8c.html" title="This file contains the NRF24 library ported to the STM8 using SDCC." alt="" coords="235,80,317,107"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="Nrf24_ceLow" name="Nrf24_ceLow">
+<area shape="rect" id="node1" title="Set CE Low." alt="" coords="612,69,719,96"/>
+<area shape="rect" id="node2" href="$mirf_8c.html#a6cfe0788d035dda33d4bc963d337e2bc" title="Power down the NRF." alt="" coords="421,19,564,45"/>
+<area shape="rect" id="node3" href="$mirf_8c.html#a1a86587383aed4ca5f4bf773341a204b" title="Starts up the NRF to be RX, the default." alt="" coords="423,69,563,96"/>
+<area shape="rect" id="node9" href="$mirf_8c.html#aa30f7d76954ad77dafd2825c4cd60c3f" title="Sends a data package to the default address. Be sure to send the correct amount of bytes as configure..." alt="" coords="445,132,541,159"/>
+<area shape="rect" id="node4" href="$mirf_8c.html#a4f5466685b94668e838714f0938b52ee" title="This sends the necessary registers to the NRF. Initially on RX mode." alt="" coords="257,5,361,32"/>
+<area shape="rect" id="node7" href="$mirf_8c.html#a958dfb81dd996b6d339b0f3441fd8531" title="Test if Sending has finished or retry is over." alt="" coords="255,56,363,83"/>
+<area shape="rect" id="node8" href="$mirf_8c.html#a53ce2a7084a16210d2907f980e607301" title="Test if chip is still sending. When sending has finished return chip to listening." alt="" coords="245,107,373,133"/>
+<area shape="rect" id="node5" href="$main_8c.html#adf492910b4e33f44cbc3b0301308292d" title=" " alt="" coords="108,56,197,83"/>
+<area shape="rect" id="node6" href="$main_8c.html#a6288eba0f8e8ad3ab1544ad731eb7667" title="Main program." alt="" coords="5,56,60,83"/>
+</map>

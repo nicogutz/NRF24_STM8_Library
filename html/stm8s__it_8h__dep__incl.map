@@ -1,0 +1,5 @@
+<map id="src/stm8s_it.h" name="src/stm8s_it.h">
+<area shape="rect" id="node1" title="This file contains the headers of the interrupt handlers." alt="" coords="56,5,169,32"/>
+<area shape="rect" id="node2" href="$main_8c.html" title="This file contains the main function for: retarget the C library printf scanf functions to the UART1 ..." alt="" coords="5,80,95,107"/>
+<area shape="rect" id="node3" href="$stm8s__it_8c.html" title="Main Interrupt Service Routines." alt="" coords="119,80,231,107"/>
+</map>

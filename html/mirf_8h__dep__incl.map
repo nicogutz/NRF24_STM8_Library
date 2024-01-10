@@ -1,0 +1,5 @@
+<map id="src/mirf.h" name="src/mirf.h">
+<area shape="rect" id="node1" title="This file contains the NRF24 library headers." alt="" coords="63,5,146,32"/>
+<area shape="rect" id="node2" href="$main_8c.html" title="This file contains the main function for: retarget the C library printf scanf functions to the UART1 ..." alt="" coords="5,80,95,107"/>
+<area shape="rect" id="node3" href="$mirf_8c.html" title="This file contains the NRF24 library ported to the STM8 using SDCC." alt="" coords="119,80,202,107"/>
+</map>

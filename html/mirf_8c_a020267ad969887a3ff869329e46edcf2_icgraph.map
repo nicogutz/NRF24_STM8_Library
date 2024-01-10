@@ -1,0 +1,17 @@
+<map id="Nrf24_configRegister" name="Nrf24_configRegister">
+<area shape="rect" id="node1" title="Clocks only one byte into the given MiRF register." alt="" coords="731,208,889,235"/>
+<area shape="rect" id="node2" href="$mirf_8c.html#a98459481c837afc7393ac8a32288439b" title="Add more device addresses to recieve (NOT TESTED)." alt="" coords="517,5,653,32"/>
+<area shape="rect" id="node3" href="$mirf_8c.html#a4f5466685b94668e838714f0938b52ee" title="This sends the necessary registers to the NRF. Initially on RX mode." alt="" coords="291,120,395,147"/>
+<area shape="rect" id="node6" href="$mirf_8c.html#a10082b1d20ffb577020449c65e523796" title="Reads NRF payload bytes into data array." alt="" coords="284,63,401,89"/>
+<area shape="rect" id="node7" href="$mirf_8c.html#a6cfe0788d035dda33d4bc963d337e2bc" title="Power down the NRF." alt="" coords="514,157,657,184"/>
+<area shape="rect" id="node8" href="$mirf_8c.html#a1a86587383aed4ca5f4bf773341a204b" title="Starts up the NRF to be RX, the default." alt="" coords="515,208,655,235"/>
+<area shape="rect" id="node11" href="$mirf_8c.html#a09bdf1c956be716a9de18b3d28468fa4" title="Sets the NRF to TX mode." alt="" coords="516,259,655,285"/>
+<area shape="rect" id="node13" href="$mirf_8c.html#a2aa994f4305cd188600f5f6fcb7638eb" title="Set TX Power." alt="" coords="493,309,677,336"/>
+<area shape="rect" id="node14" href="$mirf_8c.html#a9e1672761009b07f02ff26ad1214bb37" title="Set Auto Retransmit Delay." alt="" coords="245,335,440,361"/>
+<area shape="rect" id="node15" href="$mirf_8c.html#ad79ccd9a834c841c6e3794e4624a186a" title="Select between the high speed data rates." alt="" coords="488,411,683,437"/>
+<area shape="rect" id="node4" href="$main_8c.html#adf492910b4e33f44cbc3b0301308292d" title=" " alt="" coords="108,247,197,273"/>
+<area shape="rect" id="node5" href="$main_8c.html#a6288eba0f8e8ad3ab1544ad731eb7667" title="Main program." alt="" coords="5,247,60,273"/>
+<area shape="rect" id="node9" href="$mirf_8c.html#a958dfb81dd996b6d339b0f3441fd8531" title="Test if Sending has finished or retry is over." alt="" coords="289,221,397,248"/>
+<area shape="rect" id="node10" href="$mirf_8c.html#a53ce2a7084a16210d2907f980e607301" title="Test if chip is still sending. When sending has finished return chip to listening." alt="" coords="279,171,407,197"/>
+<area shape="rect" id="node12" href="$mirf_8c.html#aa30f7d76954ad77dafd2825c4cd60c3f" title="Sends a data package to the default address. Be sure to send the correct amount of bytes as configure..." alt="" coords="295,272,391,299"/>
+</map>

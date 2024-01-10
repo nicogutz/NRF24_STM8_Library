@@ -1,0 +1,6 @@
+<map id="Nrf24_powerUpTx" name="Nrf24_powerUpTx">
+<area shape="rect" id="node1" title="Sets the NRF to TX mode." alt="" coords="389,5,528,32"/>
+<area shape="rect" id="node2" href="$mirf_8c.html#aa30f7d76954ad77dafd2825c4cd60c3f" title="Sends a data package to the default address. Be sure to send the correct amount of bytes as configure..." alt="" coords="245,5,341,32"/>
+<area shape="rect" id="node3" href="$main_8c.html#adf492910b4e33f44cbc3b0301308292d" title=" " alt="" coords="108,5,197,32"/>
+<area shape="rect" id="node4" href="$main_8c.html#a6288eba0f8e8ad3ab1544ad731eb7667" title="Main program." alt="" coords="5,5,60,32"/>
+</map>

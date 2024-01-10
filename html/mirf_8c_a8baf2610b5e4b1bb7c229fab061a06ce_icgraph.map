@@ -1,0 +1,10 @@
+<map id="Nrf24_getStatus" name="Nrf24_getStatus">
+<area shape="rect" id="node1" title="Get the status of the NRF." alt="" coords="439,107,565,133"/>
+<area shape="rect" id="node2" href="$mirf_8c.html#a65d80ff553d151811dde0636cdd17f0f" title="Checks if data is available for reading." alt="" coords="251,5,385,32"/>
+<area shape="rect" id="node5" href="$mirf_8c.html#a00a8b619cfbbe4546b447b9abf018d71" title="Get pipe number for reading." alt="" coords="245,56,391,83"/>
+<area shape="rect" id="node6" href="$mirf_8c.html#a958dfb81dd996b6d339b0f3441fd8531" title="Test if Sending has finished or retry is over." alt="" coords="264,107,372,133"/>
+<area shape="rect" id="node7" href="$mirf_8c.html#a53ce2a7084a16210d2907f980e607301" title="Test if chip is still sending. When sending has finished return chip to listening." alt="" coords="254,157,382,184"/>
+<area shape="rect" id="node8" href="$mirf_8c.html#aa30f7d76954ad77dafd2825c4cd60c3f" title="Sends a data package to the default address. Be sure to send the correct amount of bytes as configure..." alt="" coords="270,208,366,235"/>
+<area shape="rect" id="node3" href="$main_8c.html#adf492910b4e33f44cbc3b0301308292d" title=" " alt="" coords="108,107,197,133"/>
+<area shape="rect" id="node4" href="$main_8c.html#a6288eba0f8e8ad3ab1544ad731eb7667" title="Main program." alt="" coords="5,107,60,133"/>
+</map>

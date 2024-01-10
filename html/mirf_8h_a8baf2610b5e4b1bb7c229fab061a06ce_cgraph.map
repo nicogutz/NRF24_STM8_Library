@@ -1,0 +1,8 @@
+<map id="Nrf24_getStatus" name="Nrf24_getStatus">
+<area shape="rect" id="node1" title="Get the status of the NRF." alt="" coords="5,81,132,108"/>
+<area shape="rect" id="node2" href="$mirf_8c.html#ad945b3a81b124a6a3ef283975821c1b6" title="Reads an array of bytes from the given start position in the MiRF registers." alt="" coords="180,81,328,108"/>
+<area shape="rect" id="node3" href="$mirf_8c.html#a8c41aa390e2044b74993705851507b62" title="Set CSN High." alt="" coords="391,5,475,32"/>
+<area shape="rect" id="node4" href="$mirf_8c.html#a01c4c7130d706212195ba270aa2c44bf" title="Set CSN Low." alt="" coords="385,56,481,83"/>
+<area shape="rect" id="node5" href="$mirf_8c.html#a069171ad424cd0a0b91ed0043d36b5e8" title="Reads data from MISO." alt="" coords="376,107,489,133"/>
+<area shape="rect" id="node6" href="$mirf_8c.html#aa5a4421f9dfeae78a3e66cf75985bf14" title="An SPI &quot;transfer&quot;, used in this library to simply send an address or command to the NRF." alt="" coords="383,157,482,184"/>
+</map>

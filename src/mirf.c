@@ -1,17 +1,16 @@
+#include "stdio.h"
+#include "mirf.h"
+#include "delay.h"
 /**
  ******************************************************************************
  * @file    mirf.c
- * @author  nicogutz
- * @version V0.1
+ * @author  nopnop2002, nicogutz
+ * @version V1
  * @date    9-December-2023
  * @brief   This file contains the NRF24 library ported to the STM8 using SDCC.
  ******************************************************************************
- * This was ported from the mirf library in esp-idf-mirf, which is a port in itself.
- * This only works with the STM8 peripherals library usinng Platformio's SDCC compatible
- * version.
- *
  * MIT License
- *
+ * Copyright (c) 2020 nopnop2002
  * Copyright (c) 2023 nicogutz
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -34,19 +33,19 @@
  *
  */
 
-#include "stdio.h"
-#include "mirf.h"
-#include "delay.h"
-
-// NRF Stuff
+/// Channel Number for the NRF, must be the same in all devices
 #define NRF_CHANNEL_NR 114
+/// Payload size for the NRF, must be the same in all devices
 #define NRF_PAYLOAD_SIZE 32
 
-// PINS
+/// Pin letter the NRF CE is connected to
 #define CE_PIN_LETTER GPIOC
+/// Pin number the NRF CE is connected to
 #define CE_PIN_NUMBER GPIO_PIN_4
 
+/// Pin letter the NRF CSN is connected to
 #define CSN_PIN_LETTER GPIOC
+/// Pin number the NRF CSN is connected to
 #define CSN_PIN_NUMBER GPIO_PIN_3
 
 /// @brief This function initializes the CE/CS Pins and SPI.
@@ -540,7 +539,7 @@ void Nrf24_SetSpeedDataRates(uint8_t val)
 /// @brief Set Auto Retransmit Delay
 /// @param val 0=250us, 1=500us, ... 15=4000us
 void Nrf24_setRetransmitDelay(uint8_t val)
-{
+{                      
 	uint8_t value;
 	Nrf24_readRegister(SETUP_RETR, &value, 1);
 	value = value & 0x0F;

@@ -1,0 +1,27 @@
+<map id="spi_csnHi" name="spi_csnHi">
+<area shape="rect" id="node1" title="Set CSN High." alt="" coords="888,327,972,354"/>
+<area shape="rect" id="node2" href="$mirf_8c.html#a020267ad969887a3ff869329e46edcf2" title="Clocks only one byte into the given MiRF register." alt="" coords="681,251,840,278"/>
+<area shape="rect" id="node7" href="$mirf_8c.html#a10082b1d20ffb577020449c65e523796" title="Reads NRF payload bytes into data array." alt="" coords="477,74,595,100"/>
+<area shape="rect" id="node13" href="$mirf_8c.html#aa30f7d76954ad77dafd2825c4cd60c3f" title="Sends a data package to the default address. Be sure to send the correct amount of bytes as configure..." alt="" coords="270,327,366,354"/>
+<area shape="rect" id="node17" href="$mirf_8c.html#af44f79110171d0520d01a4bcf2fd0668" title="Flushes RX FIFO." alt="" coords="704,30,817,56"/>
+<area shape="rect" id="node18" href="$mirf_8c.html#ad945b3a81b124a6a3ef283975821c1b6" title="Reads an array of bytes from the given start position in the MiRF registers." alt="" coords="687,479,835,506"/>
+<area shape="rect" id="node25" href="$mirf_8c.html#a93449fb4395f800456a7711f8fe99c68" title="Writes an array of bytes into inte the MiRF registers." alt="" coords="685,631,837,658"/>
+<area shape="rect" id="node3" href="$mirf_8c.html#a98459481c837afc7393ac8a32288439b" title="Add more device addresses to recieve (NOT TESTED)." alt="" coords="468,276,604,303"/>
+<area shape="rect" id="node4" href="$mirf_8c.html#a4f5466685b94668e838714f0938b52ee" title="This sends the necessary registers to the NRF. Initially on RX mode." alt="" coords="266,74,370,100"/>
+<area shape="rect" id="node8" href="$mirf_8c.html#a6cfe0788d035dda33d4bc963d337e2bc" title="Power down the NRF." alt="" coords="465,226,607,252"/>
+<area shape="rect" id="node9" href="$mirf_8c.html#a1a86587383aed4ca5f4bf773341a204b" title="Starts up the NRF to be RX, the default." alt="" coords="466,124,606,151"/>
+<area shape="rect" id="node12" href="$mirf_8c.html#a09bdf1c956be716a9de18b3d28468fa4" title="Sets the NRF to TX mode." alt="" coords="467,175,605,202"/>
+<area shape="rect" id="node14" href="$mirf_8c.html#a2aa994f4305cd188600f5f6fcb7638eb" title="Set TX Power." alt="" coords="444,327,628,354"/>
+<area shape="rect" id="node15" href="$mirf_8c.html#a9e1672761009b07f02ff26ad1214bb37" title="Set Auto Retransmit Delay." alt="" coords="439,479,633,506"/>
+<area shape="rect" id="node16" href="$mirf_8c.html#ad79ccd9a834c841c6e3794e4624a186a" title="Select between the high speed data rates." alt="" coords="439,530,633,556"/>
+<area shape="rect" id="node5" href="$main_8c.html#adf492910b4e33f44cbc3b0301308292d" title=" " alt="" coords="108,378,197,404"/>
+<area shape="rect" id="node6" href="$main_8c.html#a6288eba0f8e8ad3ab1544ad731eb7667" title="Main program." alt="" coords="5,378,60,404"/>
+<area shape="rect" id="node10" href="$mirf_8c.html#a958dfb81dd996b6d339b0f3441fd8531" title="Test if Sending has finished or retry is over." alt="" coords="264,226,372,252"/>
+<area shape="rect" id="node11" href="$mirf_8c.html#a53ce2a7084a16210d2907f980e607301" title="Test if chip is still sending. When sending has finished return chip to listening." alt="" coords="254,276,382,303"/>
+<area shape="rect" id="node19" href="$mirf_8c.html#a8baf2610b5e4b1bb7c229fab061a06ce" title="Get the status of the NRF." alt="" coords="473,428,599,455"/>
+<area shape="rect" id="node22" href="$mirf_8c.html#ad90581f7ddd51c01d5d0b7297c454fcc" title="Checks if FIFO is empty." alt="" coords="464,580,608,607"/>
+<area shape="rect" id="node23" href="$mirf_8c.html#acc49f1dc3c4b4482277b33b120c97b26" title="Sets the recieving address (5) bytes!" alt="" coords="470,631,602,658"/>
+<area shape="rect" id="node24" href="$mirf_8c.html#a8f3e77a2dcf7c8a359b9be8c667acfde" title="Sets the transmitting device address." alt="" coords="471,682,601,708"/>
+<area shape="rect" id="node20" href="$mirf_8c.html#a65d80ff553d151811dde0636cdd17f0f" title="Checks if data is available for reading." alt="" coords="251,378,385,404"/>
+<area shape="rect" id="node21" href="$mirf_8c.html#a00a8b619cfbbe4546b447b9abf018d71" title="Get pipe number for reading." alt="" coords="245,428,391,455"/>
+</map>

@@ -1,0 +1,8 @@
+<map id="Nrf24_powerDown" name="Nrf24_powerDown">
+<area shape="rect" id="node1" title="Power down the NRF." alt="" coords="5,31,148,57"/>
+<area shape="rect" id="node2" href="$mirf_8c.html#acac0907a8579a06c7dfe65fde12ae96c" title="Set CE Low." alt="" coords="222,5,329,32"/>
+<area shape="rect" id="node3" href="$mirf_8c.html#a020267ad969887a3ff869329e46edcf2" title="Clocks only one byte into the given MiRF register." alt="" coords="196,56,355,83"/>
+<area shape="rect" id="node4" href="$mirf_8c.html#a8c41aa390e2044b74993705851507b62" title="Set CSN High." alt="" coords="410,5,494,32"/>
+<area shape="rect" id="node5" href="$mirf_8c.html#a01c4c7130d706212195ba270aa2c44bf" title="Set CSN Low." alt="" coords="404,56,500,83"/>
+<area shape="rect" id="node6" href="$mirf_8c.html#aa5a4421f9dfeae78a3e66cf75985bf14" title="An SPI &quot;transfer&quot;, used in this library to simply send an address or command to the NRF." alt="" coords="403,107,501,133"/>
+</map>

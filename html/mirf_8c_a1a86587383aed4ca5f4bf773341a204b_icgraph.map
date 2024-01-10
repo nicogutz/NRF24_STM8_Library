@@ -1,0 +1,8 @@
+<map id="Nrf24_powerUpRx" name="Nrf24_powerUpRx">
+<area shape="rect" id="node1" title="Starts up the NRF to be RX, the default." alt="" coords="421,56,561,83"/>
+<area shape="rect" id="node2" href="$mirf_8c.html#a4f5466685b94668e838714f0938b52ee" title="This sends the necessary registers to the NRF. Initially on RX mode." alt="" coords="257,5,361,32"/>
+<area shape="rect" id="node5" href="$mirf_8c.html#a958dfb81dd996b6d339b0f3441fd8531" title="Test if Sending has finished or retry is over." alt="" coords="255,56,363,83"/>
+<area shape="rect" id="node6" href="$mirf_8c.html#a53ce2a7084a16210d2907f980e607301" title="Test if chip is still sending. When sending has finished return chip to listening." alt="" coords="245,107,373,133"/>
+<area shape="rect" id="node3" href="$main_8c.html#adf492910b4e33f44cbc3b0301308292d" title=" " alt="" coords="108,31,197,57"/>
+<area shape="rect" id="node4" href="$main_8c.html#a6288eba0f8e8ad3ab1544ad731eb7667" title="Main program." alt="" coords="5,31,60,57"/>
+</map>

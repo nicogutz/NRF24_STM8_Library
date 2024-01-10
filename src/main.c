@@ -2,10 +2,10 @@
  ******************************************************************************
  * @file main.c
  * @brief This file contains the main function for: retarget the C library printf
- *        /scanf functions to the UART1 example.
- * @author  Nicolas Gutierrez
- * @version V2.0.4
- * @date     26-April-2018
+ * scanf functions to the UART1 example.
+ * @author  MCD Application Team, Nicolas Gutierrez
+ * @version V1
+ * @date   9-December-2023
  ******************************************************************************
  * @attention
  *
@@ -59,8 +59,8 @@ void secondary()
       GPIOB,
       GPIO_PIN_2,
       GPIO_MODE_OUT_OD_LOW_FAST);
-  
-  //Button
+
+  // Button
   GPIO_Init(
       GPIOB,
       GPIO_PIN_0,
@@ -77,7 +77,7 @@ void secondary()
   GPIO_WriteHigh(GPIOB, GPIO_PIN_1);
   GPIO_WriteHigh(GPIOB, GPIO_PIN_2);
 
-  //NRF initialization
+  // NRF initialization
   Nrf24_init();
   bool PTX = 0;
 
@@ -139,15 +139,15 @@ void secondary()
       Nrf24_getData(buf);
       // The ESP is printing stuff so it takes a while to switch to RX mode.
       delay_ms(10);
-      
+
       Nrf24_send(buf, &PTX);
-      
+
       // Same here, delay a bit.
       delay_ms(10);
 
       while (!Nrf24_isSend(50, &PTX))
       {
-        //If no ACK after the preconfigured retries, send again.
+        // If no ACK after the preconfigured retries, send again.
         Nrf24_send(buf, &PTX);
         delay_ms(10);
       }

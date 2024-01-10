@@ -1,0 +1,13 @@
+<map id="Nrf24_isSending" name="Nrf24_isSending">
+<area shape="rect" id="node1" title="Test if chip is still sending. When sending has finished return chip to listening." alt="" coords="5,56,133,83"/>
+<area shape="rect" id="node2" href="$mirf_8c.html#a8baf2610b5e4b1bb7c229fab061a06ce" title="Get the status of the NRF." alt="" coords="188,19,315,45"/>
+<area shape="rect" id="node8" href="$mirf_8c.html#a1a86587383aed4ca5f4bf773341a204b" title="Starts up the NRF to be RX, the default." alt="" coords="181,81,321,108"/>
+<area shape="rect" id="node3" href="$mirf_8c.html#ad945b3a81b124a6a3ef283975821c1b6" title="Reads an array of bytes from the given start position in the MiRF registers." alt="" coords="375,5,523,32"/>
+<area shape="rect" id="node4" href="$mirf_8c.html#a8c41aa390e2044b74993705851507b62" title="Set CSN High." alt="" coords="591,157,675,184"/>
+<area shape="rect" id="node5" href="$mirf_8c.html#a01c4c7130d706212195ba270aa2c44bf" title="Set CSN Low." alt="" coords="585,56,681,83"/>
+<area shape="rect" id="node6" href="$mirf_8c.html#a069171ad424cd0a0b91ed0043d36b5e8" title="Reads data from MISO." alt="" coords="576,5,689,32"/>
+<area shape="rect" id="node7" href="$mirf_8c.html#aa5a4421f9dfeae78a3e66cf75985bf14" title="An SPI &quot;transfer&quot;, used in this library to simply send an address or command to the NRF." alt="" coords="583,107,682,133"/>
+<area shape="rect" id="node9" href="$mirf_8c.html#a022e9f774dda10550da5135df0800dea" title="Set CE High." alt="" coords="401,107,496,133"/>
+<area shape="rect" id="node10" href="$mirf_8c.html#acac0907a8579a06c7dfe65fde12ae96c" title="Set CE Low." alt="" coords="395,56,502,83"/>
+<area shape="rect" id="node11" href="$mirf_8c.html#a020267ad969887a3ff869329e46edcf2" title="Clocks only one byte into the given MiRF register." alt="" coords="369,157,528,184"/>
+</map>

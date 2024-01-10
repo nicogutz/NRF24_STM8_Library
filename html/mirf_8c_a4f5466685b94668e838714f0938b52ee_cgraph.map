@@ -1,0 +1,11 @@
+<map id="Nrf24_config" name="Nrf24_config">
+<area shape="rect" id="node1" title="This sends the necessary registers to the NRF. Initially on RX mode." alt="" coords="5,81,109,108"/>
+<area shape="rect" id="node2" href="$mirf_8c.html#a020267ad969887a3ff869329e46edcf2" title="Clocks only one byte into the given MiRF register." alt="" coords="345,81,504,108"/>
+<area shape="rect" id="node6" href="$mirf_8c.html#af44f79110171d0520d01a4bcf2fd0668" title="Flushes RX FIFO." alt="" coords="368,31,481,57"/>
+<area shape="rect" id="node7" href="$mirf_8c.html#a1a86587383aed4ca5f4bf773341a204b" title="Starts up the NRF to be RX, the default." alt="" coords="157,132,297,159"/>
+<area shape="rect" id="node3" href="$mirf_8c.html#a8c41aa390e2044b74993705851507b62" title="Set CSN High." alt="" coords="559,5,643,32"/>
+<area shape="rect" id="node4" href="$mirf_8c.html#a01c4c7130d706212195ba270aa2c44bf" title="Set CSN Low." alt="" coords="553,56,649,83"/>
+<area shape="rect" id="node5" href="$mirf_8c.html#aa5a4421f9dfeae78a3e66cf75985bf14" title="An SPI &quot;transfer&quot;, used in this library to simply send an address or command to the NRF." alt="" coords="552,107,651,133"/>
+<area shape="rect" id="node8" href="$mirf_8c.html#a022e9f774dda10550da5135df0800dea" title="Set CE High." alt="" coords="377,132,472,159"/>
+<area shape="rect" id="node9" href="$mirf_8c.html#acac0907a8579a06c7dfe65fde12ae96c" title="Set CE Low." alt="" coords="371,183,478,209"/>
+</map>

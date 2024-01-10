@@ -1,76 +1,33 @@
- 
-  NRF24L+ STM8 Compatible Library
+NRF24L+ STM8 Compatible Library (Linux, Windows)
+=====================================
+This was ported from the mirf library in [esp-idf-mirf](https://github.com/nopnop2002/esp-idf-mirf), which is a port in itself. This only works with the STM8 peripherals library usinng Platformio's SDCC compatible version.
+
+Documentation
+=============
+Documentation at https://nicogutz.github.io/NRF24_STM8_Library
+
+How to build STM8 MIRF
 =====================================
 
-  This was ported from the mirf library in esp-idf-mirf, which is a port in itself.
-  This only works with the STM8 peripherals library usinng Platformio's SDCC compatible
-  version.
- 
-  MIT License
- 
-  Copyright (c) 2023 nicogutz
- 
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to deal
-  in the Software without restriction, including without limitation the rights
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-  copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
- 
-  The above copyright notice and this permission notice shall be included in all
-  copies or substantial portions of the Software.
- 
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  SOFTWARE.
- 
-.  Copyright 2018-present PlatformIO <contact@platformio.org>
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-       http://www.apache.org/licenses/LICENSE-2.0
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-
-
-
-How to build PlatformIO based project
-=====================================
-
-1. [Install PlatformIO Core](https://docs.platformio.org/page/core.html)
-2. 
-2. Download [development platform with examples](https://github.com/platformio/platform-ststm8/archive/develop.zip)
-3. Extract ZIP archive
-4. Run these commands:
-
+1. (Windows) Install STLink [Drivers](https://www.st.com/en/development-tools/stsw-link009.html)
+2. [Install PlatformIO](https://docs.platformio.org/en/latest/core/installation/methods/installer-script.html)
+3. Install the platformio extension on VSCode.
+4. Clone this repo and open with VSCode.
 ```shell
-# Change directory to example
-$ cd platform-ststm8/examples/spl-blink
-
-# Build project
-$ pio run
-
-# Upload firmware
-$ pio run --target upload
-
-# Build specific environment
-$ pio run -e stm8sdisco
-
-# Upload firmware for the specific environment
-$ pio run -e stm8sdisco --target upload
-
-# Clean build files
-$ pio run --target clean
+$ git clone https://github.com/nicogutz/NRF24_STM8_Library
 ```
+5. Make sure [env:stm8sblack] is selected on the PlatformIO environments.
+6. Connect STLink and STM8, build and upload using the buttons at the bottom.
 
-Notes regarding SPL setup
+Usage
+=====
+Please see [MIRF](src/MIRF.md) for information.
+
+Debugging
+==========
+Debugging is currently only possible using Linux, there is a core issue with SDCC. This might get fixed in the future.
+
+Notes regarding SPL Setup
 =========================
 
-Please see the `src/stm8s_conf.h` file for activating more SPL modules, if you wish to expand the functionality of this example. Only modules (like ADC, UART, etc.) that are activated in the configuration file are compiled in. In this example, only the GPIO module is active. Activating unused modules will result in a higher flash usage that will make even compilation even impossible for smaller chips, to care must be taken.
+Please see the `src/stm8s_conf.h` file for activating more SPL modules, if you wish to expand the functionality of this example. Only modules (like ADC, UART, etc.) that are activated in the configuration file are compiled in. In this example, only the GPIO module is active. Activating unused modules will result in a higher flash usage that will make even compilation even impossible for smaller chips, care must be taken.

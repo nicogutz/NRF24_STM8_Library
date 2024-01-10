@@ -1,0 +1,10 @@
+<map id="Nrf24_setRADDR" name="Nrf24_setRADDR">
+<area shape="rect" id="node1" title="Sets the recieving address (5) bytes!" alt="" coords="5,107,137,133"/>
+<area shape="rect" id="node2" href="$mirf_8c.html#ad945b3a81b124a6a3ef283975821c1b6" title="Reads an array of bytes from the given start position in the MiRF registers." alt="" coords="187,132,335,159"/>
+<area shape="rect" id="node7" href="$mirf_8c.html#a93449fb4395f800456a7711f8fe99c68" title="Writes an array of bytes into inte the MiRF registers." alt="" coords="185,81,337,108"/>
+<area shape="rect" id="node3" href="$mirf_8c.html#a8c41aa390e2044b74993705851507b62" title="Set CSN High." alt="" coords="402,56,486,83"/>
+<area shape="rect" id="node4" href="$mirf_8c.html#a01c4c7130d706212195ba270aa2c44bf" title="Set CSN Low." alt="" coords="396,107,492,133"/>
+<area shape="rect" id="node5" href="$mirf_8c.html#a069171ad424cd0a0b91ed0043d36b5e8" title="Reads data from MISO." alt="" coords="387,208,501,235"/>
+<area shape="rect" id="node6" href="$mirf_8c.html#aa5a4421f9dfeae78a3e66cf75985bf14" title="An SPI &quot;transfer&quot;, used in this library to simply send an address or command to the NRF." alt="" coords="395,157,493,184"/>
+<area shape="rect" id="node8" href="$mirf_8c.html#a39a4c4319000b7418b3d32aa2e9d9494" title="This function writes data to MOSI. It checks if it is being used." alt="" coords="385,5,503,32"/>
+</map>
