@@ -1,4 +1,4 @@
-NRF24L+ STM8 Compatible Library (Linux, Windows)
+NRF24L01 + STM8 Compatible C Library (Linux, Windows)
 =====================================
 This was ported from the mirf library in [esp-idf-mirf](https://github.com/nopnop2002/esp-idf-mirf), which is a port in itself. This only works with the STM8 peripherals library usinng Platformio's SDCC compatible version.
 
