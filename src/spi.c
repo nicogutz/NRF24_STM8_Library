@@ -3,7 +3,6 @@
 /// @param Dataout A uint8_t Array
 /// @param DataLength The length of the Array
 /// @return TRUE if it worked
-
 bool spi_write_byte(uint8_t *Dataout, uint8_t DataLength) {
     for (uint8_t i = 0; i < DataLength; i++) {
         while (SPI_GetFlagStatus(SPI_FLAG_TXE) == RESET) {

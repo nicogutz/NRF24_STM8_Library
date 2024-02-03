@@ -27,16 +27,16 @@
  */
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm8s.h"
-#include "stm8s_it.h" /* SDCC patch: required by SDCC for interrupts */
-#include "stdio.h"
 #include "delay.h"
 #include "mirf.h"
+#include "stdio.h"
+#include "stm8s.h"
+#include "stm8s_it.h" /* SDCC patch: required by SDCC for interrupts */
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* SDCC patch: ensure same types as stdio.h */
-#if SDCC_VERSION >= 30605 // declaration changed in sdcc 3.6.5 (officially with 3.7.0)
+#if SDCC_VERSION >= 30605  // declaration changed in sdcc 3.6.5 (officially with 3.7.0)
 #define PUTCHAR_PROTOTYPE int putchar(int c)
 #define GETCHAR_PROTOTYPE int getchar(void)
 #else
@@ -48,120 +48,106 @@
 unsigned int bIntFlag;
 /* Private function prototypes -----------------------------------------------*/
 
-void secondary()
-{
-  // Debuging LEDs
-  GPIO_Init(
-      GPIOB,
-      GPIO_PIN_1,
-      GPIO_MODE_OUT_OD_LOW_FAST); // Open Drain Mode, since it has to sink current
-  GPIO_Init(
-      GPIOB,
-      GPIO_PIN_2,
-      GPIO_MODE_OUT_OD_LOW_FAST);
+void secondary() {
+    // Debuging LEDs
+    GPIO_Init(
+        GPIOB,
+        GPIO_PIN_1,
+        GPIO_MODE_OUT_OD_LOW_FAST);  // Open Drain Mode, since it has to sink current
+    GPIO_Init(
+        GPIOB,
+        GPIO_PIN_2,
+        GPIO_MODE_OUT_OD_LOW_FAST);
 
-  GPIO_Init(
-      GPIOC,
-      GPIO_PIN_1,
-      GPIO_MODE_OUT_OD_LOW_FAST); // Open Drain Mode, since it has to sink current
-      
+    GPIO_Init(
+        GPIOC,
+        GPIO_PIN_1,
+        GPIO_MODE_OUT_OD_LOW_FAST);  // Open Drain Mode, since it has to sink current
 
-  // Button
-  GPIO_Init(
-      GPIOB,
-      GPIO_PIN_0,
-      GPIO_MODE_IN_PU_IT);
+    // Button
+    GPIO_Init(
+        GPIOB,
+        GPIO_PIN_0,
+        GPIO_MODE_IN_PU_IT);
 
-  // Interrupt for button
-  EXTI_DeInit();
-  EXTI_SetExtIntSensitivity(EXTI_PORT_GPIOB, EXTI_SENSITIVITY_FALL_ONLY);
-  EXTI_SetTLISensitivity(EXTI_TLISENSITIVITY_FALL_ONLY);
+    // Interrupt for button
+    EXTI_DeInit();
+    EXTI_SetExtIntSensitivity(EXTI_PORT_GPIOB, EXTI_SENSITIVITY_FALL_ONLY);
+    EXTI_SetTLISensitivity(EXTI_TLISENSITIVITY_FALL_ONLY);
 
-  enableInterrupts();
+    enableInterrupts();
 
-  // Turn off LEDs
-  GPIO_WriteHigh(GPIOB, GPIO_PIN_1);
-  GPIO_WriteHigh(GPIOB, GPIO_PIN_2);
-  GPIO_WriteHigh(GPIOC, GPIO_PIN_1);
+    // Turn off LEDs
+    GPIO_WriteHigh(GPIOB, GPIO_PIN_1);
+    GPIO_WriteHigh(GPIOB, GPIO_PIN_2);
+    GPIO_WriteHigh(GPIOC, GPIO_PIN_1);
 
-  // NRF initialization
-  Nrf24_init();
-  bool PTX = 0;
+    // NRF initialization
+    Nrf24_init();
+    bool PTX = 0;
 
-  Nrf24_config(&PTX);
+    Nrf24_config(&PTX);
 
-  // Set own address using 5 characters
-  int ret = Nrf24_setRADDR((uint8_t *)"ABCDE");
-  if (ret != SUCCESS)
-  {
-    while (1)
-    {
-      delay_ms(1);
+    // Set own address using 5 characters
+    int ret = Nrf24_setRADDR((uint8_t *)"ABCDE");
+    if (ret != SUCCESS) {
+        while (1) {
+            delay_ms(1);
+        }
     }
-  }
 
-  // Set the receiver address using 5 characters
-  ret = Nrf24_setTADDR((uint8_t *)"FGHIJ");
-  if (ret != SUCCESS)
-  {
-    while (1)
-    {
-      delay_ms(1);
+    // Set the receiver address using 5 characters
+    ret = Nrf24_setTADDR((uint8_t *)"FGHIJ");
+    if (ret != SUCCESS) {
+        while (1) {
+            delay_ms(1);
+        }
     }
-  }
 
-  // This has to be set to 1MBps and 150us delay, if using 250kbps, use at least 1000us delay
-  Nrf24_SetSpeedDataRates(RF24_1MBPS);
-  Nrf24_setRetransmitDelay(0);
+    // This has to be set to 1MBps and 150us delay, if using 250kbps, use at least 1000us delay
+    Nrf24_SetSpeedDataRates(RF24_1MBPS);
+    Nrf24_setRetransmitDelay(0);
 
-  // Output/Input Buffer
-  uint8_t buf[32];
+    // Output/Input Buffer
+    uint8_t buf[32];
 
-  // Clear RX FiFo
-  while (1)
-  {
-    if (Nrf24_dataReady() == FALSE)
-    {
-      break;
-    };
-    Nrf24_getData(buf);
-  }
-
-  while (1)
-  {
-    // When the program is received, the received data is output from the serial port
-    if (Nrf24_dataReady())
-    {
-      // Turns the led on when a packet is recived if the button was clicked
-      if (bIntFlag == 1)
-      {
-        bIntFlag = 0;
-        GPIO_WriteLow(GPIOB, GPIO_PIN_1);
-      }
-      else
-      {
-        GPIO_WriteHigh(GPIOB, GPIO_PIN_1);
-      }
-
-      Nrf24_getData(buf);
-      // The ESP is printing stuff so it takes a while to switch to RX mode.
-      delay_ms(10);
-
-      Nrf24_send(buf, &PTX);
-
-      // Same here, delay a bit.
-      delay_ms(10);
-
-      while (!Nrf24_isSend(50, &PTX))
-      {
-        // If no ACK after the preconfigured retries, send again.
-        Nrf24_send(buf, &PTX);
-        delay_ms(10);
-      }
+    // Clear RX FiFo
+    while (1) {
+        if (Nrf24_dataReady() == FALSE) {
+            break;
+        };
+        Nrf24_getData(buf);
     }
-    // Wait a bit to check if the NRF recieved data.
-    delay_ms(1);
-  }
+
+    while (1) {
+        // When the program is received, the received data is output from the serial port
+        if (Nrf24_dataReady()) {
+            // Turns the led on when a packet is recived if the button was clicked
+            if (bIntFlag == 1) {
+                bIntFlag = 0;
+                GPIO_WriteLow(GPIOB, GPIO_PIN_1);
+            } else {
+                GPIO_WriteHigh(GPIOB, GPIO_PIN_1);
+            }
+
+            Nrf24_getData(buf);
+            // The ESP is printing stuff so it takes a while to switch to RX mode.
+            delay_ms(10);
+
+            Nrf24_send(buf, &PTX);
+
+            // Same here, delay a bit.
+            delay_ms(10);
+
+            while (!Nrf24_isSend(50, &PTX)) {
+                // If no ACK after the preconfigured retries, send again.
+                Nrf24_send(buf, &PTX);
+                delay_ms(10);
+            }
+        }
+        // Wait a bit to check if the NRF recieved data.
+        delay_ms(1);
+    }
 }
 
 /**
@@ -169,12 +155,11 @@ void secondary()
  * @param  None
  * @retval None
  */
-void main(void)
-{
-  /*High speed internal clock prescaler: 1*/
-  CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1);
+void main(void) {
+    /*High speed internal clock prescaler: 1*/
+    CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1);
 
-  secondary();
+    secondary();
 }
 
 #ifdef USE_FULL_ASSERT
@@ -186,16 +171,14 @@ void main(void)
  * @param line: assert_param error line source number
  * @retval None
  */
-void assert_failed(uint8_t *file, uint32_t line)
-{
-  /* User can add his own implementation to report the file name and line number,
-     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-  (void)file;
-  (void)line;
-  /* Infinite loop */
-  while (1)
-  {
-  }
+void assert_failed(uint8_t *file, uint32_t line) {
+    /* User can add his own implementation to report the file name and line number,
+       ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+    (void)file;
+    (void)line;
+    /* Infinite loop */
+    while (1) {
+    }
 }
 #endif
 

@@ -157,8 +157,7 @@
  *
  * For use with setPALevel()
  */
-typedef enum
-{
+typedef enum {
     RF24_PA_MIN = 0,
     RF24_PA_LOW,
     RF24_PA_HIGH,
@@ -171,8 +170,7 @@ typedef enum
  *
  * For use with setDataRate()
  */
-typedef enum
-{
+typedef enum {
     RF24_1MBPS = 0,
     RF24_2MBPS,
     RF24_250KBPS
@@ -183,8 +181,7 @@ typedef enum
  *
  * For use with setCRCLength()
  */
-typedef enum
-{
+typedef enum {
     RF24_CRC_DISABLED = 0,
     RF24_CRC_8,
     RF24_CRC_16
