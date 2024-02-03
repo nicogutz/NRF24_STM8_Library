@@ -1,5 +1,7 @@
 MIT License (MIRF)
+
 Copyright (c) 2020 nopnop2002
+
 Copyright (c) 2023 nicogutz
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -21,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 Copyright 2018-present PlatformIO <contact@platformio.org> (PlatformIO Files)
+
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -32,6 +35,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 COPYRIGHT 2014 STMicroelectronics (STM8 Files + Library)
+
 Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
 You may not use this file except in compliance with the License.
 You may obtain a copy of the License at:
