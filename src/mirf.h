@@ -1,6 +1,6 @@
+#include "stm8s.h"
 #ifndef MAIN_MIRF_H_
 #define MAIN_MIRF_H_
-#include "stm8s.h"
 /**
  ******************************************************************************
  * @file    mirf.h
@@ -191,11 +191,6 @@ typedef enum
 } rf24_crclength_e;
 
 void Nrf24_init();
-bool spi_write_byte(uint8_t *Dataout, uint8_t DataLength);
-bool spi_read_byte(uint8_t *Datain, uint8_t DataLength);
-uint8_t spi_transfer(uint8_t address);
-void spi_csnLow();
-void spi_csnHi();
 void Nrf24_config(bool *PTX);
 ErrorStatus Nrf24_setRADDR(uint8_t *adr);
 ErrorStatus Nrf24_setTADDR(uint8_t *adr);

@@ -60,6 +60,12 @@ void secondary()
       GPIO_PIN_2,
       GPIO_MODE_OUT_OD_LOW_FAST);
 
+  GPIO_Init(
+      GPIOC,
+      GPIO_PIN_1,
+      GPIO_MODE_OUT_OD_LOW_FAST); // Open Drain Mode, since it has to sink current
+      
+
   // Button
   GPIO_Init(
       GPIOB,
@@ -76,6 +82,7 @@ void secondary()
   // Turn off LEDs
   GPIO_WriteHigh(GPIOB, GPIO_PIN_1);
   GPIO_WriteHigh(GPIOB, GPIO_PIN_2);
+  GPIO_WriteHigh(GPIOC, GPIO_PIN_1);
 
   // NRF initialization
   Nrf24_init();
