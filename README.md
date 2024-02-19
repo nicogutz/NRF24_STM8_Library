@@ -22,7 +22,7 @@ $ git clone https://github.com/nicogutz/NRF24_STM8_Library
 
 Usage
 =====
-Please see [MIRF](src/MIRF.md) for information.
+Please see [MIRF](src/MIRF.md) for information, the equivalent ESP example used here is [Ping-Pong](https://github.com/nopnop2002/esp-idf-mirf/tree/master/Ping-Pong).
 
 Debugging
 ==========
