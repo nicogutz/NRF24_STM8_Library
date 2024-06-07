@@ -1,4 +1,4 @@
-MIT License (MIRF)
+MIT License
 
 Copyright (c) 2020 nopnop2002
 
